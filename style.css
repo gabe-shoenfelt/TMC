@@ -5,7 +5,7 @@ img {
 body {
   text-align: center;
   font-family: 'fantasy', cursive, sans-serif;
-  background: #000000; /* solid black */
+  background: #000000; /* pure black */
   color: goldenrod;
   margin: 0;
   min-height: 100vh;
@@ -13,67 +13,63 @@ body {
   overflow: hidden;
 }
 
-/* Gold slime dripping down from the top */
+/* Gold slime drops falling down – thicker, more blob-like drips */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
+  top: -150%; /* start higher so they enter from off-screen */
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 250%; /* tall enough to cover full fall */
   background: 
-    /* Multiple slime drip layers for depth and randomness */
-    linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(255, 215, 0, 0) 25%, rgba(255, 215, 0, 0.07) 28%, rgba(255, 215, 0, 0.14) 30%, transparent 40%),
-    linear-gradient(to bottom, transparent 0%, transparent 35%, rgba(255, 223, 0, 0.05) 38%, rgba(255, 223, 0, 0.10) 40%, transparent 50%),
-    linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(255, 193, 0, 0.06) 53%, rgba(255, 193, 0, 0.11) 55%, transparent 65%);
-  background-size: 100% 600px, 100% 900px, 100% 1200px;
+    /* Layer 1: main thick slime drips */
+    radial-gradient(ellipse at 20% 10%, rgba(255, 215, 0, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 15%, rgba(255, 223, 0, 0.11) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 8%, rgba(255, 193, 0, 0.08) 0%, transparent 65%),
+    /* Layer 2: smaller trailing blobs/drops */
+    radial-gradient(circle at 35% 40%, rgba(255, 215, 0, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 65% 55%, rgba(255, 165, 0, 0.06) 0%, transparent 45%);
+  background-size: 100% 800px, 100% 1200px, 100% 1000px, 80% 900px, 90% 1100px;
   background-position: 0 0;
   animation: 
-    slime-drip-slow 28s linear infinite,
-    slime-drip-medium 42s linear infinite,
-    slime-drip-fast 55s linear infinite;
+    slime-drop-main 32s linear infinite,
+    slime-drop-secondary 48s linear infinite;
   mix-blend-mode: screen;
   pointer-events: none;
   z-index: -1;
 }
 
-/* Extra subtle glow/shine layer for gooey molten look */
+/* Shiny molten highlight layer for gooey slime feel */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 30% 10%, rgba(255, 215, 0, 0.08) 0%, transparent 40%),
-              radial-gradient(circle at 70% 25%, rgba(255, 165, 0, 0.06) 0%, transparent 45%);
-  background-size: 200% 200%;
-  animation: gentle-swirl 80s ease-in-out infinite;
+  background: 
+    linear-gradient(to bottom, rgba(255, 215, 0, 0.04) 0%, transparent 30%),
+    radial-gradient(circle at 40% 20%, rgba(255, 223, 0, 0.12) 0%, transparent 50%);
+  animation: shimmer 25s ease-in-out infinite;
   mix-blend-mode: screen;
-  opacity: 0.4;
+  opacity: 0.35;
   pointer-events: none;
   z-index: -1;
 }
 
-@keyframes slime-drip-slow {
-  0%   { transform: translateY(-100%); }
+@keyframes slime-drop-main {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes slime-drop-secondary {
+  0%   { transform: translateY(-20%); }
   100% { transform: translateY(120%); }
 }
 
-@keyframes slime-drip-medium {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(130%); }
+@keyframes shimmer {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 0.5;  transform: scale(1.03); }
 }
 
-@keyframes slime-drip-fast {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(150%); }
-}
-
-@keyframes gentle-swirl {
-  0%   { background-position: 0% 0%; }
-  50%  { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
-}
-
-/* Unchanged text glows for visibility on black + gold slime */
+/* Your unchanged text glows – keeps goldenrod visible over the slime */
 h1, h2, h3 {
   text-shadow: 0 0 12px #ffcc00, 0 0 25px #ff9900;
 }
