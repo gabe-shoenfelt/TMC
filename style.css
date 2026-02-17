@@ -40,39 +40,32 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
   height: var(--height);
   background: radial-gradient(
     circle at 50% 20%,
-    #e6d5a3 0%,
-    #d4c68c 20%,
-    #c2b67a 40%,
-    #b0a668 60%,
-    #9e9656 80%,
-    #8c8644 100%
+    #f5e8c7 0%,     /* much brighter start */
+    #f0e0b5 20%,
+    #e8d89f 40%,
+    #dfc98a 60%,
+    #d4bf78 80%,
+    #c9b466 100%
   );
   border-radius: 45% 55% 65% 35% / 55% 45% 70% 40%;
-  opacity: 0.94;
+  opacity: 0.97;      /* brighter and more visible */
   box-shadow:
-    inset 0 -15px 25px rgba(230,213,163,0.35),
-    inset 0 10px 20px rgba(80,60,0,0.12);
+    inset 0 -12px 20px rgba(245,232,199,0.45),   /* softer, brighter highlight */
+    inset 0 8px 16px rgba(120,100,40,0.10);      /* very light depth only */
   animation:
     paint-drip var(--duration) cubic-bezier(0.28, 0.12, 0.32, 1) infinite;
   transform-origin: 50% 0%;
-  overflow: visible; /* allow tail to show outside bounds */
 }
 
-/* Add trailing paint tail using ::after pseudo-element */
-.slime-drop::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0; /* starts short, grows as drop falls */
-  background: linear-gradient(to bottom, rgba(230,213,163,0.7) 0%, rgba(230,213,163,0.2) 60%, transparent 100%);
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  transform-origin: top center;
-  opacity: 0.85;
-  pointer-events: none;
-  animation: paint-tail var(--duration) cubic-bezier(0.28, 0.12, 0.32, 1) infinite;
-}
+/* Individual drop variations */
+.drop-1  { --left:  5%; --width:  68px; --height: 140px; --duration: 78s; animation-delay: -5s; }
+.drop-2  { --left: 18%; --width:  98px; --height: 175px; --duration: 94s; animation-delay: -18s; }
+.drop-3  { --left: 33%; --width:  62px; --height: 125px; --duration: 86s; animation-delay: -35s; }
+.drop-4  { --left: 47%; --width:  92px; --height: 165px; --duration: 102s; animation-delay: -12s; }
+.drop-5  { --left: 60%; --width:  78px; --height: 150px; --duration: 90s; animation-delay: -42s; }
+.drop-6  { --left: 74%; --width: 108px; --height: 190px; --duration: 106s; animation-delay: -26s; }
+.drop-7  { --left: 87%; --width:  56px; --height: 108px; --duration: 74s; animation-delay: -52s; }
+.drop-8  { --left: 94%; --width:  84px; --height: 155px; --duration: 96s; animation-delay: -7s; }
 
 @keyframes paint-drip {
   0% {
@@ -83,7 +76,7 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
   7% {
     top: -78%;
     transform: scale(0.48, 0.28);
-    opacity: 0.94;
+    opacity: 0.97;
   }
   24% {
     transform: scale(1.18, 4.2);
@@ -100,56 +93,22 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
   100% {
     top: 175%;
     transform: scale(0.09, 0.20);
-    opacity: 0.92;
+    opacity: 0.95;
   }
 }
 
-/* Tail animation: grows longer as drop falls, then fades */
-@keyframes paint-tail {
-  0% {
-    height: 0%;
-    opacity: 0;
-  }
-  20% {
-    height: 300%; /* tail starts forming behind */
-    opacity: 0.85;
-  }
-  50% {
-    height: 800%; /* long trailing paint streak */
-    opacity: 0.75;
-  }
-  80% {
-    height: 1200%;
-    opacity: 0.5;
-  }
-  100% {
-    height: 1800%;
-    opacity: 0;
-  }
-}
-
-/* Individual drop variations */
-.drop-1  { --left:  5%; --width:  68px; --height: 140px; --duration: 78s; animation-delay: -5s; }
-.drop-2  { --left: 18%; --width:  98px; --height: 175px; --duration: 94s; animation-delay: -18s; }
-.drop-3  { --left: 33%; --width:  62px; --height: 125px; --duration: 86s; animation-delay: -35s; }
-.drop-4  { --left: 47%; --width:  92px; --height: 165px; --duration: 102s; animation-delay: -12s; }
-.drop-5  { --left: 60%; --width:  78px; --height: 150px; --duration: 90s; animation-delay: -42s; }
-.drop-6  { --left: 74%; --width: 108px; --height: 190px; --duration: 106s; animation-delay: -26s; }
-.drop-7  { --left: 87%; --width:  56px; --height: 108px; --duration: 74s; animation-delay: -52s; }
-.drop-8  { --left: 94%; --width:  84px; --height: 155px; --duration: 96s; animation-delay: -7s; }
-
-/* Very faint atmosphere */
+/* Very faint atmosphere – kept subtle */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(230,213,163,0.06) 0%, transparent 88%);
+  background: radial-gradient(circle at 50% 0%, rgba(245,232,199,0.08) 0%, transparent 88%);
   pointer-events: none;
   z-index: -2;
   animation: subtle-paint-glow 45s ease-in-out infinite;
 }
 
 @keyframes subtle-paint-glow {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 0.6; }
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.7; }
 }
