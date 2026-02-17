@@ -26,9 +26,9 @@ a { color: #ffea00; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 
 /* ────────────────────────────────────────
-   Binary rain
+   Blinking binary backdrop (cool glitchy matrix feel)
 ──────────────────────────────────────── */
-.binary-layer {
+.binary-backdrop {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -36,35 +36,40 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   overflow: hidden;
   font-family: 'Courier New', Courier, monospace;
   color: #00ff41;
-  opacity: 0.25;
+  opacity: 0.28;
   white-space: pre;
   font-size: 18px;
-  line-height: 1.1;
+  line-height: 1.15;
   user-select: none;
   letter-spacing: 1px;
-  will-change: transform;
+  will-change: transform, opacity;
   transform: translateY(-120%) translateZ(0);
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
 
-.binary-layer::before {
-  content: "01010101 10101010 00110011 11001100 00011100 11100011 01010101 10101010\n10101010 01010101 11001100 00110011 11100011 00011100 10101010 01010101\n00110011 11001100 00011100 11100011 01010101 10101010 10101010 01010101\n11001100 00110011 11100011 00011100 10101010 01010101 00110011 11001100\n00011100 11100011 01010101 10101010 10101010 01010101 11001100 00110011\n11100011 00011100 10101010 01010101 00110011 11001100 00011100 11100011";
+.binary-backdrop::before {
+  content: "0101010101 1010101010 0011001100 1100110011 0001110001 1110001110 0101010101 1010101010\n1010101010 0101010101 1100110011 0011001100 1110001110 0001110001 1010101010 0101010101\n0011001100 1100110011 0001110001 1110001110 0101010101 1010101010 1010101010 0101010101\n1100110011 0011001100 1110001110 0001110001 1010101010 0101010101 0011001100 1100110011\n0001110001 1110001110 0101010101 1010101010 1010101010 0101010101 1100110011 0011001100\n1110001110 0001110001 1010101010 0101010101 0011001100 1100110011 0001110001 1110001110";
   display: block;
-  animation: fall-binary 60s linear infinite;
+  animation: fall-binary 80s linear infinite, blink-random 0.12s steps(1) infinite;
 }
 
-.binary-1 { animation-delay: 0s;    opacity: 0.35; font-size: 20px; }
-.binary-2 { animation-delay: -20s;  opacity: 0.28; font-size: 16px; }
-.binary-3 { animation-delay: -40s;  opacity: 0.22; font-size: 22px; }
+.binary-1 { animation-delay: 0s;    opacity: 0.38; font-size: 20px; }
+.binary-2 { animation-delay: -25s;  opacity: 0.30; font-size: 16px; }
+.binary-3 { animation-delay: -50s;  opacity: 0.24; font-size: 22px; }
 
 @keyframes fall-binary {
   0%   { transform: translateY(-120%) translateZ(0); }
   100% { transform: translateY(120%) translateZ(0); }
 }
 
+@keyframes blink-random {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; } /* fast flicker for glitchy look */
+}
+
 /* ────────────────────────────────────────
-   Gold paint drips + trails
+   Gold drips with trails (normal size, trail behind)
 ──────────────────────────────────────── */
 .goo-container {
   position: fixed;
@@ -105,7 +110,7 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 .slime-drop::before {
   content: "";
   position: absolute;
-  bottom: 100%;                    /* anchored at bottom of drop */
+  bottom: 100%;
   left: 0;
   width: 100%;
   height: 0;
