@@ -13,37 +13,30 @@ body
     align-items: flex-start;
 }
 .goo-container {
-    /* Apply filters to the container, not individual blobs, for the merging effect */
-    filter: blur(10px) contrast(30); 
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  filter: url('#goo'); /* Applies the SVG filter to container */
 }
 
-.goo-blob {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: #ffecb3; /* A golden color */
-    border-radius: 50%;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: flow-down 4s infinite ease-in-out forwards;
-    opacity: 1;
+.goo-drop {
+  position: absolute;
+  background: linear-gradient(to bottom, #FFD700, #FF8C00); /* Golden color */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  top: -150px; /* Start above viewport */
+  animation: drip 4s infinite linear;
 }
 
-/* Keyframes for the animation */
-@keyframes flow-down {
-    0% {
-        transform: translate(-50%, 0vh) scale(1);
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, 100vh) scale(0.5); /* Move to bottom and shrink */
-        opacity: 0; /* Disappear at the end */
-    }
+/* Create variation in the drops */
+.goo-drop:nth-child(1) { left: 20%; animation-delay: 0s; }
+.goo-drop:nth-child(2) { left: 50%; animation-delay: 1s; width: 120px; height: 120px; }
+.goo-drop:nth-child(3) { left: 80%; animation-delay: 2s; width: 80px; height: 80px; }
+
+@keyframes drip {
+  0% { top: -150px; }
+  100% { top: 100vh; } /* End below viewport, regardless of height */
 }

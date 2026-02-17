@@ -21,19 +21,18 @@
 <h2> More Coming Soon  </h2> 
  </body>
 </html>
- <div class="goo-container">
-        <div class="goo-blob" style="animation-delay: 0s;"></div>
-        <div class="goo-blob" style="animation-delay: 1s;"></div>
-        <div class="goo-blob" style="animation-delay: 2s;"></div>
-        <div class="goo-blob" style="animation-delay: 3s;"></div>
+<div class="goo-container">
+  <div class="goo-drop"></div>
+  <div class="goo-drop"></div>
+  <div class="goo-drop"></div>
+</div>
 
-<!-- Define the SVG filter in the HTML -->
-<svg xmlns="http://www.w3.org" version="1.1" style="display: none;">
+<!-- SVG filter for the goo effect -->
+<svg style="display:none">
   <defs>
     <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7" result="goo" />
-      <feBlend in="SourceGraphic" in2="goo" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
     </filter>
   </defs>
 </svg>
