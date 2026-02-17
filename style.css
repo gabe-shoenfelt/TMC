@@ -8,7 +8,10 @@ body {
   overflow: hidden;
 }
 
-img { width: 200px; margin: 20px 0; }
+img {
+  width: 200px;
+  margin: 20px 0;
+}
 
 h1, h2, h3 {
   text-shadow: 0 0 12px #ffcc00, 0 0 25px #ff9900;
@@ -21,10 +24,17 @@ p, a {
   margin: 12px 0;
 }
 
-a { color: #ffea00; text-decoration: none; }
-a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
+a {
+  color: #ffea00;
+  text-decoration: none;
+}
 
-/* Goo container – merges drops into one solid piece when they touch */
+a:hover {
+  color: #fff;
+  text-shadow: 0 0 18px #ffff00;
+}
+
+/* Container that applies the gooey merging effect */
 .goo-container {
   position: fixed;
   inset: 0;
@@ -39,84 +49,85 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   width: var(--width);
   height: var(--height);
   background: radial-gradient(
-    circle at 40% 12%,
-    #fffacd 0%,
-    #ffef00 15%,
-    #ffdb4d 32%,
-    #ffcc00 50%,
-    #ffaa00 70%,
-    #ff8c00 85%,
-    #e67e00 100%
+    circle at 38% 10%,
+    #fffef0 0%,
+    #fff59d 12%,
+    #ffeb3b 28%,
+    #ffdb4d 45%,
+    #ffcc00 62%,
+    #ffaa00 78%,
+    #ff8800 92%,
+    #e67e22 100%
   );
-  border-radius: 50% 50% 70% 30% / 60% 40% 80% 40%;
+  border-radius: 50% 50% 75% 25% / 65% 35% 80% 35%;
   opacity: 1;
-  box-shadow: 
-    inset 0 -35px 45px rgba(255,255,200,0.6),   /* bright metallic shine from top */
-    inset 0 25px 35px rgba(150,100,0,0.3),      /* depth shadow */
-    0 0 50px rgba(255,200,0,0.8);
-  animation: 
-    continuous-drip var(--duration) cubic-bezier(0.25, 0.1, 0.25, 1) infinite,
-    subtle-wobble 12s ease-in-out infinite alternate;
+  box-shadow:
+    inset 0 -40px 50px rgba(255,255,220,0.65),   /* strong ceiling highlight */
+    inset 0 30px 40px rgba(140,90,0,0.35),       /* depth inside blob */
+    0 0 55px rgba(255,190,0,0.85);
+  animation:
+    realistic-ceiling-drip var(--duration) cubic-bezier(0.23, 0.1, 0.32, 1) infinite,
+    tiny-wobble 14s ease-in-out infinite alternate;
   transform-origin: 50% 0%;
 }
 
-/* 8 drops with staggered starts for continuous flow */
-.drop-1  { --left: 7%;  --width: 68px; --height: 135px; --duration: 75s; animation-delay: -2s; }
-.drop-2  { --left: 20%; --width: 98px; --height: 180px; --duration: 90s; animation-delay: -18s; }
-.drop-3  { --left: 35%; --width: 60px; --height: 115px; --duration: 82s; animation-delay: -32s; }
-.drop-4  { --left: 48%; --width: 90px; --height: 165px; --duration: 98s; animation-delay: -12s; }
-.drop-5  { --left: 62%; --width: 76px; --height: 140px; --duration: 85s; animation-delay: -40s; }
-.drop-6  { --left: 75%; --width: 110px; --height: 195px; --duration: 100s; animation-delay: -25s; }
-.drop-7  { --left: 88%; --width: 54px; --height: 102px; --duration: 70s; animation-delay: -48s; }
-.drop-8  { --left: 96%; --width: 84px; --height: 155px; --duration: 92s; animation-delay: -6s; }
+/* Staggered for continuous dripping flow */
+.drop-1  { --left:  5%; --width:  70px; --height: 145px; --duration: 78s;  animation-delay: -3s;  }
+.drop-2  { --left: 18%; --width: 102px; --height: 185px; --duration: 94s;  animation-delay: -19s; }
+.drop-3  { --left: 33%; --width:  65px; --height: 125px; --duration: 86s;  animation-delay: -34s; }
+.drop-4  { --left: 47%; --width:  95px; --height: 170px; --duration: 102s; animation-delay: -13s; }
+.drop-5  { --left: 60%; --width:  80px; --height: 150px; --duration: 89s;  animation-delay: -42s; }
+.drop-6  { --left: 74%; --width: 115px; --height: 200px; --duration: 105s; animation-delay: -27s; }
+.drop-7  { --left: 87%; --width:  58px; --height: 110px; --duration: 74s;  animation-delay: -51s; }
+.drop-8  { --left: 95%; --width:  88px; --height: 160px; --duration: 96s;  animation-delay: -7s;  }
 
-@keyframes continuous-drip {
+@keyframes realistic-ceiling-drip {
   0% {
-    top: -80%;                      /* starts far above – no visible entry */
-    transform: scale(0.03, 0.01);
+    top: -100%;                     /* starts very high above screen */
+    transform: scale(0.02, 0.008);  /* extremely flat against ceiling */
     opacity: 0;
   }
-  4% {
-    top: -60%;
-    transform: scale(0.5, 0.3);
+  6% {
+    top: -70%;
+    transform: scale(0.45, 0.25);
     opacity: 1;
   }
-  15% { /* very slow emergence & build-up from ceiling */
-    transform: scale(1.3, 3.4);
+  20% { /* very slow accumulation & detachment from top */
+    transform: scale(1.2, 3.8);
   }
-  40% { /* maximum stretch – long heavy tail */
-    transform: scale(0.88, 5.8) translateY(10%);
+  45% { /* maximum viscous stretch – long heavy dripping tail */
+    transform: scale(0.85, 6.2) translateY(8%);
   }
-  65% { /* viscous mid-fall with gravity acceleration */
-    transform: scale(0.8, 4.5) translateY(80%);
+  70% { /* mid-fall with noticeable gravity acceleration */
+    transform: scale(0.78, 4.8) translateY(85%);
   }
-  88% { /* speeds up, tail thins out a lot */
-    transform: scale(0.55, 2.2) translateY(145%);
+  90% { /* faster fall, tail becomes very thin */
+    transform: scale(0.5, 2.0) translateY(155%);
   }
   100% {
-    top: 150%;                      /* ends well below screen */
-    transform: scale(0.15, 0.3);
-    opacity: 0.92;                  /* almost full opacity until end */
+    top: 160%;                      /* ends far below screen */
+    transform: scale(0.12, 0.25);
+    opacity: 0.95;
   }
 }
 
-@keyframes subtle-wobble {
-  0%   { transform: translateX(0) rotate(-1deg); }
-  100% { transform: translateX(calc(var(--width) * 0.06)) rotate(2deg); }
+@keyframes tiny-wobble {
+  0%   { transform: translateX(0) rotate(-0.7deg); }
+  100% { transform: translateX(calc(var(--width) * 0.055)) rotate(1.8deg); }
 }
 
-/* Gentle metallic gold atmosphere */
+/* Soft golden ceiling glow / liquid shine */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 3%, rgba(255, 245, 120, 0.2) 0%, transparent 78%);
+  background: radial-gradient(circle at 50% 0%, rgba(255, 248, 140, 0.22) 0%, transparent 80%);
   pointer-events: none;
   z-index: -2;
-  animation: haze-glow 35s ease-in-out infinite;
+  animation: soft-ceiling-glow 40s ease-in-out infinite;
 }
 
-@keyframes haze-glow {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 0.85; }
+@keyframes soft-ceiling-glow {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.9; }
 }
