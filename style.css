@@ -25,33 +25,39 @@ p, a {
 a { color: #ffea00; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 
-/* Binary background – clean falling code rain */
-.binary-bg {
+/* Matrix-style binary background – classic falling code rain */
+.matrix-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: -3;
   overflow: hidden;
+  background: #000;
   font-family: 'Courier New', Courier, monospace;
   color: #0f0;
-  opacity: 0.14;
+  font-size: 16px;
+  line-height: 1.4;
   white-space: pre;
-  font-size: 14px;
-  line-height: 1.3;
-  user-select: none;
+  opacity: 0.16;
   will-change: transform;
   transform: translateY(-100%);
+  animation: rain 120s linear infinite;
 }
 
-.binary-bg::before {
-  content: "010101010101010101010101010101010101\n101010101010101010101010101010101010\n001100110011001100110011001100110011\n110011001100110011001100110011001100\n000111000111000111000111000111000111\n111000111000111000111000111000111000\n010101010101010101010101010101010101\n101010101010101010101010101010101010\n001100110011001100110011001100110011\n110011001100110011001100110011001100";
+.matrix-bg::before,
+.matrix-bg::after {
+  content: "0101010101010101010101010101010101010101\n1010101010101010101010101010101010101010\n0011001100110011001100110011001100110011\n1100110011001100110011001100110011001100\n0001110001110001110001110001110001110001\n1110001110001110001110001110001110001110\n0101010101010101010101010101010101010101\n1010101010101010101010101010101010101010\n0011001100110011001100110011001100110011\n1100110011001100110011001100110011001100\n0001110001110001110001110001110001110001\n1110001110001110001110001110001110001110";
   display: block;
-  animation: rain 140s linear infinite;
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
 }
 
-.binary-1 { animation-delay: 0s;    opacity: 0.18; font-size: 16px; }
-.binary-2 { animation-delay: -45s;  opacity: 0.12; font-size: 14px; }
-.binary-3 { animation-delay: -90s;  opacity: 0.09; font-size: 18px; }
+.matrix-bg::after {
+  animation-delay: -60s;
+  opacity: 0.12;
+}
 
 @keyframes rain {
   0%   { transform: translateY(-100%); }
