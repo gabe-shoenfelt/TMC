@@ -25,42 +25,60 @@
 <h2> More Coming Soon  </h2> 
     </div>
 
-   <style>
-  /* The Golden Goo Liquid Overlay */
-  .goo-overlay {
+   /* The Container for the Goo Background */
+  .goo-container {
     position: fixed;
-    top: -100%; /* Start above screen */
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Golden Gradient */
-    background: linear-gradient(to bottom, #d4af37, #fde08d, #d4af37);
-    z-index: 9999; /* Ensure it is on top */
-    pointer-events: none; /* Let clicks pass through */
-    animation: gooAnimation 3s ease-in-out forwards; /* 3s duration */
-    filter: url(#gooeyFilter); /* Apply goo filter */
+    top: 0; left: 0; width: 100%; height: 100%;
+    filter: url(#goo);
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: -1; /* Keeps it behind content */
   }
 
-  @keyframes gooAnimation {
-    0% { top: -100%; }
-    50% { top: 0; } /* Covers screen */
-    100% { top: 100%; } /* Disappears at bottom */
+  /* The Moving Goo Elements */
+  .blob {
+    position: absolute;
+    background: linear-gradient(to bottom, #FFD700, #FF8C00); /* Golden color */
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: moveGoo 4s ease-in-out forwards;
+    opacity: 0.8;
   }
+
+  /* Keyframes for falling and disappearing */
+  @keyframes moveGoo {
+    0% { transform: translate(50vw, -200px) scale(1); }
+    50% { transform: translate(50vw, 50vh) scale(2); opacity: 0.9; }
+    100% { transform: translate(50vw, 120vh) scale(0.5); opacity: 0; }
+  }
+
+  /* SVG filter definition for the goo effect */
+  svg { display: none; }
 </style>
+</head>
+<body>
 
-<!-- SVG Filter for Gooey Look -->
-<svg style="position:absolute; width:0; height:0;">
+<!-- SVG Filter Definition (crucial for the goo effect) -->
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
   <defs>
-    <filter id="gooeyFilter">
+    <filter id="goo">
       <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
-      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
     </filter>
   </defs>
 </svg>
 
-<!-- The Effect Div -->
-<div class="goo-overlay"></div>
-        </svg>
-    </div>
+<div class="goo-container">
+  <!-- Add multiple blobs for better effect -->
+  <div class="blob" style="width:100px; height:100px; animation-delay:0s;"></div>
+  <div class="blob" style="width:150px; height:150px; animation-delay:1s; left: 20%;"></div>
+  <div class="blob" style="width:80px; height:80px; animation-delay:2s; left: 70%;"></div>
+</div>
+
+<div style="padding: 50px; text-align: center;">
+  <h1>Your Content</h1>
+  <p>The golden goo will flow behind this text.</p>
+</div>
+
+</body>
+</html>
 
