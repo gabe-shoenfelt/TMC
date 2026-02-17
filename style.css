@@ -24,7 +24,7 @@ p, a {
 a { color: #ffea00; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 
-/* Very aggressive goo merging */
+/* Goo container for ink merging */
 .goo-container {
   position: fixed;
   inset: 0;
@@ -39,89 +39,86 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   width: var(--width);
   height: var(--height);
   background: radial-gradient(
-    circle at 40% 8%,
-    #fffff0 0%,
-    #fffb9f 10%,
-    #fff566 22%,
-    #ffeb3b 38%,
-    #ffdb00 54%,
-    #ffbf00 70%,
-    #ffa200 84%,
-    #ff8800 96%,
-    #e07000 100%
+    circle at 40% 10%,
+    #fffef0 0%,
+    #fffedc 8%,
+    #fff8a8 20%,
+    #fff566 35%,
+    #ffef66 50%,
+    #ffe933 65%,
+    #ffdb4d 80%,
+    #ffd700 95%
   );
-  border-radius: 50% 50% 80% 20% / 70% 30% 85% 30%;
-  opacity: 1;
+  border-radius: 50% 50% 75% 25% / 65% 35% 80% 35%;
+  opacity: 0.95; /* slight translucency for ink feel */
   box-shadow:
-    inset 0 -50px 60px rgba(255,255,210,0.75),     /* very bright top specular */
-    inset 0 35px 50px rgba(120,80,0,0.45),          /* deep liquid shadow */
-    0 0 70px rgba(255,180,0,0.95),
-    0 0 120px rgba(255,140,0,0.5);
+    inset 0 -45px 55px rgba(255,255,240,0.8),   /* bright metallic ink highlight */
+    inset 0 25px 40px rgba(200,180,0,0.25),     /* subtle depth */
+    0 0 60px rgba(255,240,100,0.9),
+    0 0 100px rgba(255,220,80,0.6);
   animation:
-    extreme-ceiling-drip var(--duration) cubic-bezier(0.22, 0.05, 0.35, 1) infinite,
-    micro-wobble 16s ease-in-out infinite alternate;
+    ceiling-ink-drip var(--duration) cubic-bezier(0.25, 0.1, 0.3, 1) infinite,
+    gentle-ink-wobble 13s ease-in-out infinite alternate;
   transform-origin: 50% 0%;
 }
 
-/* 10 drops → more frequent merging & constant dripping feel */
-.drop-1  { --left:  4%; --width:  72px; --height: 150px; --duration: 82s; animation-delay: -2s;  }
-.drop-2  { --left: 16%; --width: 105px; --height: 192px; --duration: 98s; animation-delay: -20s; }
-.drop-3  { --left: 29%; --width:  68px; --height: 130px; --duration: 90s; animation-delay: -36s; }
-.drop-4  { --left: 42%; --width:  98px; --height: 178px; --duration: 106s; animation-delay: -14s; }
-.drop-5  { --left: 55%; --width:  82px; --height: 155px; --duration: 93s; animation-delay: -45s; }
-.drop-6  { --left: 67%; --width: 118px; --height: 210px; --duration: 110s; animation-delay: -29s; }
-.drop-7  { --left: 79%; --width:  60px; --height: 115px; --duration: 78s; animation-delay: -54s; }
-.drop-8  { --left: 88%; --width:  90px; --height: 168px; --duration: 100s; animation-delay: -8s;  }
-.drop-9  { --left: 93%; --width:  55px; --height: 105px; --duration: 84s; animation-delay: -62s; }
-.drop-10 { --left: 97%; --width:  85px; --height: 158px; --duration: 96s; animation-delay: -4s;  }
+/* Staggered for continuous ink flow */
+.drop-1  { --left:  6%; --width:  65px; --height: 135px; --duration: 76s; animation-delay: -4s; }
+.drop-2  { --left: 19%; --width:  95px; --height: 170px; --duration: 92s; animation-delay: -17s; }
+.drop-3  { --left: 34%; --width:  60px; --height: 120px; --duration: 84s; animation-delay: -33s; }
+.drop-4  { --left: 48%; --width:  90px; --height: 160px; --duration: 100s; animation-delay: -11s; }
+.drop-5  { --left: 61%; --width:  75px; --height: 145px; --duration: 88s; animation-delay: -40s; }
+.drop-6  { --left: 75%; --width: 105px; --height: 185px; --duration: 104s; animation-delay: -24s; }
+.drop-7  { --left: 86%; --width:  55px; --height: 105px; --duration: 72s; animation-delay: -50s; }
+.drop-8  { --left: 94%; --width:  82px; --height: 150px; --duration: 94s; animation-delay: -6s; }
 
-@keyframes extreme-ceiling-drip {
+@keyframes ceiling-ink-drip {
   0% {
-    top: -120%;                     /* insanely high start */
-    transform: scale(0.015, 0.005); /* ultra-flat against ceiling */
+    top: -110%;
+    transform: scale(0.02, 0.006);
     opacity: 0;
   }
-  7% {
-    top: -85%;
-    transform: scale(0.4, 0.22);
-    opacity: 1;
+  6% {
+    top: -75%;
+    transform: scale(0.5, 0.3);
+    opacity: 0.95;
   }
-  24% { /* extremely slow bulge & release from ceiling */
-    transform: scale(1.15, 4.5);
+  22% { /* slow ink pooling at top */
+    transform: scale(1.25, 4.0);
   }
-  48% { /* absurdly long stretch – looks like it's barely holding on */
-    transform: scale(0.82, 7.5) translateY(5%);
+  46% { /* elegant long ink trail stretch */
+    transform: scale(0.9, 6.0) translateY(6%);
   }
-  74% { /* strong gravity acceleration mid-fall */
-    transform: scale(0.75, 5.6) translateY(95%);
+  72% { /* flowing descent */
+    transform: scale(0.8, 4.5) translateY(90%);
   }
-  92% { /* very thin tail, fast drop */
-    transform: scale(0.45, 1.8) translateY(170%);
+  90% { /* thinner trail, faster flow */
+    transform: scale(0.5, 2.2) translateY(160%);
   }
   100% {
-    top: 180%;                      /* far below screen */
-    transform: scale(0.08, 0.18);
-    opacity: 0.96;
+    top: 170%;
+    transform: scale(0.1, 0.22);
+    opacity: 0.9;
   }
 }
 
-@keyframes micro-wobble {
-  0%   { transform: translateX(0) rotate(-0.6deg); }
-  100% { transform: translateX(calc(var(--width) * 0.05)) rotate(1.6deg); }
+@keyframes gentle-ink-wobble {
+  0%   { transform: translateX(0) rotate(-0.8deg); }
+  100% { transform: translateX(calc(var(--width) * 0.06)) rotate(1.8deg); }
 }
 
-/* Intense golden ceiling liquid glow */
+/* Soft metallic ink glow from "ceiling" */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 252, 160, 0.28) 0%, transparent 75%);
+  background: radial-gradient(circle at 50% 0%, rgba(255, 250, 180, 0.25) 0%, transparent 78%);
   pointer-events: none;
   z-index: -2;
-  animation: ceiling-shine 45s ease-in-out infinite;
+  animation: ink-glow 38s ease-in-out infinite;
 }
 
-@keyframes ceiling-shine {
-  0%, 100% { opacity: 0.6; }
-  50%      { opacity: 0.95; }
+@keyframes ink-glow {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.92; }
 }
