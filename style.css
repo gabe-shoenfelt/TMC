@@ -25,50 +25,40 @@ p, a {
 a { color: #ffea00; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 
-/* Binary rain – normal size, subtle blink, no giant text */
-.binary-layer {
+/* Binary background – clean falling code rain */
+.binary-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: -3;
   overflow: hidden;
   font-family: 'Courier New', Courier, monospace;
-  color: #00ff41;
-  opacity: 0.18;
+  color: #0f0;
+  opacity: 0.14;
   white-space: pre;
-  font-size: 16px;
-  line-height: 1.2;
+  font-size: 14px;
+  line-height: 1.3;
   user-select: none;
-  letter-spacing: 0.5px;
-  will-change: transform, opacity;
-  transform: translateY(-120%) translateZ(0);
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
+  will-change: transform;
+  transform: translateY(-100%);
 }
 
-.binary-layer::before {
-  content: "01010101010101010101010101010101\n10101010101010101010101010101010\n00110011001100110011001100110011\n11001100110011001100110011001100\n00011100011100011100011100011100\n11100011100011100011100011100011\n01010101010101010101010101010101\n10101010101010101010101010101010\n00110011001100110011001100110011\n11001100110011001100110011001100";
+.binary-bg::before {
+  content: "010101010101010101010101010101010101\n101010101010101010101010101010101010\n001100110011001100110011001100110011\n110011001100110011001100110011001100\n000111000111000111000111000111000111\n111000111000111000111000111000111000\n010101010101010101010101010101010101\n101010101010101010101010101010101010\n001100110011001100110011001100110011\n110011001100110011001100110011001100";
   display: block;
-  animation: 
-    fall-binary 100s linear infinite,
-    subtle-blink 6s steps(3) infinite;
+  animation: rain 140s linear infinite;
 }
 
-.binary-1 { animation-delay: 0s;    opacity: 0.24; font-size: 17px; }
-.binary-2 { animation-delay: -33s;  opacity: 0.16; font-size: 15px; }
-.binary-3 { animation-delay: -66s;  opacity: 0.12; font-size: 19px; }
+.binary-1 { animation-delay: 0s;    opacity: 0.18; font-size: 16px; }
+.binary-2 { animation-delay: -45s;  opacity: 0.12; font-size: 14px; }
+.binary-3 { animation-delay: -90s;  opacity: 0.09; font-size: 18px; }
 
-@keyframes fall-binary {
-  0%   { transform: translateY(-120%) translateZ(0); }
-  100% { transform: translateY(120%) translateZ(0); }
+@keyframes rain {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
 
-@keyframes subtle-blink {
-  0%, 30%, 60%, 90%, 100% { opacity: 1; }
-  15%, 45%, 75%           { opacity: 0.5; }
-}
-
-/* Gold drips with trails (normal size, trail behind) */
+/* Gold drips with trails */
 .goo-container {
   position: fixed;
   inset: 0;
