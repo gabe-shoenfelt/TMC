@@ -11,20 +11,20 @@ body {
 img { width: 200px; margin: 20px 0; }
 
 h1, h2, h3 {
-  text-shadow: 0 0 12px #ffcc00, 0 0 25px #ff9900;
+  text-shadow: 0 0 8px #ffcc00, 0 0 16px #cc9900;
   margin: 10px 0;
 }
 
 p, a {
-  text-shadow: 0 0 6px #ffd700;
+  text-shadow: 0 0 4px #d4af37;
   font-size: 1.2rem;
   margin: 12px 0;
 }
 
-a { color: #ffea00; text-decoration: none; }
-a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
+a { color: #e6c200; text-decoration: none; }
+a:hover { color: #fff; text-shadow: 0 0 12px #ffff99; }
 
-/* Goo container for ink merging */
+/* Goo container for merging */
 .goo-container {
   position: fixed;
   inset: 0;
@@ -39,30 +39,26 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   width: var(--width);
   height: var(--height);
   background: radial-gradient(
-    circle at 40% 10%,
-    #fffef0 0%,
-    #fffedc 8%,
-    #fff8a8 20%,
-    #fff566 35%,
-    #ffef66 50%,
-    #ffe933 65%,
-    #ffdb4d 80%,
-    #ffd700 95%
+    circle at 45% 15%,
+    #f0e68c 0%,
+    #e6d97c 15%,
+    #d4c46a 35%,
+    #c4b55c 55%,
+    #b3a64c 75%,
+    #a3973c 95%
   );
-  border-radius: 50% 50% 75% 25% / 65% 35% 80% 35%;
-  opacity: 0.95; /* slight translucency for ink feel */
+  border-radius: 50% 50% 70% 30% / 60% 40% 75% 40%;
+  opacity: 0.92;
   box-shadow:
-    inset 0 -45px 55px rgba(255,255,240,0.8),   /* bright metallic ink highlight */
-    inset 0 25px 40px rgba(200,180,0,0.25),     /* subtle depth */
-    0 0 60px rgba(255,240,100,0.9),
-    0 0 100px rgba(255,220,80,0.6);
+    inset 0 -20px 30px rgba(240,230,140,0.4),   /* subtle soft highlight only */
+    inset 0 15px 25px rgba(100,80,0,0.15);      /* very gentle depth */
   animation:
     ceiling-ink-drip var(--duration) cubic-bezier(0.25, 0.1, 0.3, 1) infinite,
     gentle-ink-wobble 13s ease-in-out infinite alternate;
   transform-origin: 50% 0%;
 }
 
-/* Staggered for continuous ink flow */
+/* Continuous flow */
 .drop-1  { --left:  6%; --width:  65px; --height: 135px; --duration: 76s; animation-delay: -4s; }
 .drop-2  { --left: 19%; --width:  95px; --height: 170px; --duration: 92s; animation-delay: -17s; }
 .drop-3  { --left: 34%; --width:  60px; --height: 120px; --duration: 84s; animation-delay: -33s; }
@@ -81,18 +77,18 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   6% {
     top: -75%;
     transform: scale(0.5, 0.3);
-    opacity: 0.95;
+    opacity: 0.92;
   }
-  22% { /* slow ink pooling at top */
+  22% {
     transform: scale(1.25, 4.0);
   }
-  46% { /* elegant long ink trail stretch */
+  46% {
     transform: scale(0.9, 6.0) translateY(6%);
   }
-  72% { /* flowing descent */
+  72% {
     transform: scale(0.8, 4.5) translateY(90%);
   }
-  90% { /* thinner trail, faster flow */
+  90% {
     transform: scale(0.5, 2.2) translateY(160%);
   }
   100% {
@@ -107,18 +103,18 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   100% { transform: translateX(calc(var(--width) * 0.06)) rotate(1.8deg); }
 }
 
-/* Soft metallic ink glow from "ceiling" */
+/* Very subtle ceiling/ink atmosphere – no strong shine */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 250, 180, 0.25) 0%, transparent 78%);
+  background: radial-gradient(circle at 50% 0%, rgba(240,230,140,0.08) 0%, transparent 85%);
   pointer-events: none;
   z-index: -2;
-  animation: ink-glow 38s ease-in-out infinite;
+  animation: faint-glow 42s ease-in-out infinite;
 }
 
-@keyframes ink-glow {
-  0%, 100% { opacity: 0.55; }
-  50%      { opacity: 0.92; }
+@keyframes faint-glow {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.65; }
 }
