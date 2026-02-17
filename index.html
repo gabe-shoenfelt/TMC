@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TMC GAMES - Liquid Gold Dripping Slime</title>
+  <title> TMC GAMES </title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- SVG Filter for true viscous merging (combines on overlap) -->
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position:absolute;width:0;height:0;">
+  <!-- SVG Goo filter – tuned for solid merging -->
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position:absolute; width:0; height:0;">
     <defs>
-      <filter id="goo" filterUnits="objectBoundingBox" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="11" result="blur"/>
-        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
-        <feBlend in="SourceGraphic" in2="goo" mode="normal"/>
+      <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" result="goo"/>
+        <feBlend in="SourceGraphic" in2="goo"/>
       </filter>
     </defs>
   </svg>

@@ -6,7 +6,6 @@ body {
   font-family: 'fantasy', cursive, sans-serif;
   text-align: center;
   overflow: hidden;
-  position: relative;
 }
 
 img { width: 200px; margin: 20px 0; }
@@ -25,7 +24,7 @@ p, a {
 a { color: #ffea00; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
 
-/* Goo container - makes drops merge like real liquid when they touch */
+/* Container applies the goo filter so drops merge into solid liquid when close */
 .goo-container {
   position: fixed;
   inset: 0;
@@ -40,82 +39,84 @@ a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
   width: var(--width);
   height: var(--height);
   background: radial-gradient(
-    circle at 38% 18%,
-    #fff9a8 0%,
-    #ffe766 18%,
-    #ffcc00 40%,
-    #f9b22e 65%,
-    #e6951e 82%,
-    #d17f18 100%
+    circle at 40% 15%,
+    #fffacd 2%,
+    #ffef8f 20%,
+    #ffe066 38%,
+    #ffcc00 55%,
+    #ffb733 72%,
+    #ffa500 88%,
+    #e68a00 100%
   );
-  border-radius: 45% 55% 70% 30% / 60% 40% 75% 35%;
-  opacity: 1;                  /* solid - no see-through */
+  border-radius: 48% 52% 68% 32% / 58% 42% 78% 38%;
+  opacity: 1;
   box-shadow: 
-    inset 0 -25px 30px rgba(255,255,255,0.45),  /* metallic highlight */
-    0 0 35px rgba(255,215,0,0.6);
+    inset 0 -30px 40px rgba(255,255,220,0.55),   /* strong top highlight */
+    inset 0 20px 30px rgba(180,140,0,0.25),      /* subtle shadow inside */
+    0 0 40px rgba(255,215,0,0.7);
   animation: 
-    liquid-drip var(--duration) cubic-bezier(0.35, 0.05, 0.25, 1) infinite,
-    gentle-wobble 7.5s ease-in-out infinite alternate;
+    drip-from-ceiling var(--duration) cubic-bezier(0.22, 0.61, 0.36, 1) infinite,
+    light-wobble 11s ease-in-out infinite alternate;
   transform-origin: 50% 0%;
 }
 
-/* 8 varied drops for more natural collisions */
-.drop-1 { --left: 8%;  --width: 65px;  --height: 135px; --duration: 68s; animation-delay: -3s; }
-.drop-2 { --left: 19%; --width: 92px;  --height: 168px; --duration: 81s; animation-delay: -14s; }
-.drop-3 { --left: 34%; --width: 58px;  --height: 112px; --duration: 73s; animation-delay: -27s; }
-.drop-4 { --left: 49%; --width: 88px;  --height: 155px; --duration: 89s; animation-delay: -9s; }
-.drop-5 { --left: 64%; --width: 71px;  --height: 128px; --duration: 76s; animation-delay: -35s; }
-.drop-6 { --left: 77%; --width: 105px; --height: 182px; --duration: 92s; animation-delay: -19s; }
-.drop-7 { --left: 87%; --width: 52px;  --height: 98px;  --duration: 64s; animation-delay: -41s; }
-.drop-8 { --left: 95%; --width: 78px;  --height: 145px; --duration: 85s; animation-delay: -6s; }
+/* More drops = more merging opportunities */
+.drop-1  { --left: 6%;  --width: 70px;  --height: 140px; --duration: 72s; animation-delay: -4s; }
+.drop-2  { --left: 18%; --width: 95px;  --height: 175px; --duration: 88s; animation-delay: -16s; }
+.drop-3  { --left: 32%; --width: 62px;  --height: 118px; --duration: 79s; animation-delay: -29s; }
+.drop-4  { --left: 47%; --width: 92px;  --height: 162px; --duration: 94s; animation-delay: -11s; }
+.drop-5  { --left: 61%; --width: 78px;  --height: 138px; --duration: 82s; animation-delay: -37s; }
+.drop-6  { --left: 74%; --width: 108px; --height: 190px; --duration: 96s; animation-delay: -21s; }
+.drop-7  { --left: 86%; --width: 55px;  --height: 105px; --duration: 68s; animation-delay: -44s; }
+.drop-8  { --left: 94%; --width: 82px;  --height: 152px; --duration: 90s; animation-delay: -8s; }
 
-@keyframes liquid-drip {
+@keyframes drip-from-ceiling {
   0% {
-    top: -45%;
-    transform: scale(0.08, 0.03);
+    top: -60%;                     /* starts way above screen */
+    transform: scale(0.04, 0.015);
     opacity: 0;
   }
-  6% {
-    top: -32%;
-    transform: scale(0.65, 0.45);
+  5% {
+    top: -45%;
+    transform: scale(0.55, 0.35);
     opacity: 1;
   }
-  14% { /* slow formation at top - looks like it's building up */
-    transform: scale(1.35, 2.65);
+  18% { /* very slow build-up at top – feels like accumulating */
+    transform: scale(1.25, 3.1);
   }
-  38% { /* long viscous stretch - tail forms */
-    transform: scale(0.92, 4.8) translateY(15%);
+  42% { /* extreme stretch – long dripping tail */
+    transform: scale(0.9, 5.4) translateY(12%);
   }
-  62% { /* mid-fall with gravity pull */
-    transform: scale(0.88, 3.9) translateY(68%);
+  68% { /* mid-fall, heavy viscous pull */
+    transform: scale(0.82, 4.2) translateY(75%);
   }
-  81% { /* accelerate + thin tail */
-    transform: scale(0.68, 2.1) translateY(118%);
+  85% { /* speeds up, tail thins dramatically */
+    transform: scale(0.6, 2.4) translateY(135%);
   }
   100% {
-    top: 135%;
-    transform: scale(0.22, 0.45);
-    opacity: 0.85;
+    top: 140%;
+    transform: scale(0.18, 0.38);
+    opacity: 0.9;
   }
 }
 
-@keyframes gentle-wobble {
-  0%   { transform: translateX(0) rotate(-1deg); }
-  100% { transform: translateX(calc(var(--width) * 0.09)) rotate(2.5deg); }
+@keyframes light-wobble {
+  0%   { transform: translateX(0) rotate(-0.8deg); }
+  100% { transform: translateX(calc(var(--width) * 0.07)) rotate(2.2deg); }
 }
 
-/* Subtle metallic gold haze over everything */
+/* Soft golden glow layer */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 5%, rgba(255, 235, 100, 0.16) 0%, transparent 75%);
+  background: radial-gradient(circle at 50% 4%, rgba(255, 240, 100, 0.18) 0%, transparent 80%);
   pointer-events: none;
   z-index: -2;
-  animation: gold-haze 26s ease-in-out infinite;
+  animation: glow-pulse 32s ease-in-out infinite;
 }
 
-@keyframes gold-haze {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 0.75; }
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.8; }
 }
