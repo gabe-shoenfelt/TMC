@@ -8,42 +8,42 @@ body
     font-family: 'fantasy';
     background: black;
     color: goldenrod;
-    display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+  display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 .goo-container {
-    /* Apply the filter to the container, not the items themselves */
-    filter: url('#goo') blur(5px) contrast(100); /* CSS filters are a common way to create this effect */
+    /* Apply filters to the container, not individual blobs, for the merging effect */
+    filter: blur(10px) contrast(30); 
+    position: relative;
     width: 100%;
     height: 100%;
-    position: relative;
 }
 
-.goo-item {
+.goo-blob {
     position: absolute;
     width: 100px;
     height: 100px;
+    background-color: #ffecb3; /* A golden color */
     border-radius: 50%;
-    /* Define the "gold" color using a linear gradient for depth */
-    background: linear-gradient(to bottom, #cfc09f 27%, #ffecb3 40%, #3a2c0f 78%);
-    animation: drip-down 3s infinite ease-in; /* Animation for moving top to bottom */
-    left: calc(50% - 50px); /* Center items horizontally */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: flow-down 4s infinite ease-in-out forwards;
+    opacity: 1;
 }
 
-/* Define the keyframe animation */
-@keyframes drip-down {
+/* Keyframes for the animation */
+@keyframes flow-down {
     0% {
-        top: 0%;
-        transform: scale(1);
+        transform: translate(-50%, 0vh) scale(1);
+        opacity: 1;
     }
-    50% {
-        transform: scale(1.5, 0.5); /* Squeeze effect while moving */
+    80% {
+        opacity: 1;
     }
     100% {
-        top: 100%;
-        transform: scale(0.5, 1.5); /* Stretch effect at the bottom */
+        transform: translate(-50%, 100vh) scale(0.5); /* Move to bottom and shrink */
+        opacity: 0; /* Disappear at the end */
     }
 }
