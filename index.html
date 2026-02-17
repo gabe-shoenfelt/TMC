@@ -25,22 +25,42 @@
 <h2> More Coming Soon  </h2> 
     </div>
 
-    <!-- Goo effect container -->
-    <div class="goo-container">
-        <!-- Gooey elements (blobs) -->
-        <div class="goo-blob" id="blob1"></div>
-        <div class="goo-blob" id="blob2"></div>
-        <div class="goo-blob" id="blob3"></div>
+   <style>
+  /* The Golden Goo Liquid Overlay */
+  .goo-overlay {
+    position: fixed;
+    top: -100%; /* Start above screen */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Golden Gradient */
+    background: linear-gradient(to bottom, #d4af37, #fde08d, #d4af37);
+    z-index: 9999; /* Ensure it is on top */
+    pointer-events: none; /* Let clicks pass through */
+    animation: gooAnimation 3s ease-in-out forwards; /* 3s duration */
+    filter: url(#gooeyFilter); /* Apply goo filter */
+  }
 
-        <!-- SVG filter definition for the gooey effect -->
-        <svg xmlns="http://www.w3.org" version="1.1" style="display: none;">
-            <defs>
-                <filter id="goo">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-                    <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-                    <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
-                </filter>
-            </defs>
+  @keyframes gooAnimation {
+    0% { top: -100%; }
+    50% { top: 0; } /* Covers screen */
+    100% { top: 100%; } /* Disappears at bottom */
+  }
+</style>
+
+<!-- SVG Filter for Gooey Look -->
+<svg style="position:absolute; width:0; height:0;">
+  <defs>
+    <filter id="gooeyFilter">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- The Effect Div -->
+<div class="goo-overlay"></div>
         </svg>
     </div>
 
