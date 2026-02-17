@@ -24,7 +24,7 @@ p, a {
 a { color: #d4af37; text-decoration: none; }
 a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
 
-/* Goo container for realistic paint merging */
+/* Goo container */
 .goo-container {
   position: fixed;
   inset: 0;
@@ -50,23 +50,29 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
   border-radius: 45% 55% 65% 35% / 55% 45% 70% 40%;
   opacity: 0.94;
   box-shadow:
-    inset 0 -15px 25px rgba(230,213,163,0.35),  /* soft paint highlight */
-    inset 0 10px 20px rgba(80,60,0,0.12);       /* subtle paint depth */
+    inset 0 -15px 25px rgba(230,213,163,0.35),
+    inset 0 10px 20px rgba(80,60,0,0.12);
   animation:
-    paint-drip var(--duration) cubic-bezier(0.28, 0.12, 0.32, 1) infinite,
-    light-paint-wobble 14s ease-in-out infinite alternate;
+    paint-drip var(--duration) cubic-bezier(0.28, 0.12, 0.32, 1) infinite;
   transform-origin: 50% 0%;
+  overflow: visible; /* allow tail to show outside bounds */
 }
 
-/* Staggered for continuous dripping */
-.drop-1  { --left:  5%; --width:  68px; --height: 140px; --duration: 78s; animation-delay: -5s; }
-.drop-2  { --left: 18%; --width:  98px; --height: 175px; --duration: 94s; animation-delay: -18s; }
-.drop-3  { --left: 33%; --width:  62px; --height: 125px; --duration: 86s; animation-delay: -35s; }
-.drop-4  { --left: 47%; --width:  92px; --height: 165px; --duration: 102s; animation-delay: -12s; }
-.drop-5  { --left: 60%; --width:  78px; --height: 150px; --duration: 90s; animation-delay: -42s; }
-.drop-6  { --left: 74%; --width: 108px; --height: 190px; --duration: 106s; animation-delay: -26s; }
-.drop-7  { --left: 87%; --width:  56px; --height: 108px; --duration: 74s; animation-delay: -52s; }
-.drop-8  { --left: 94%; --width:  84px; --height: 155px; --duration: 96s; animation-delay: -7s; }
+/* Add trailing paint tail using ::after pseudo-element */
+.slime-drop::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0; /* starts short, grows as drop falls */
+  background: linear-gradient(to bottom, rgba(230,213,163,0.7) 0%, rgba(230,213,163,0.2) 60%, transparent 100%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform-origin: top center;
+  opacity: 0.85;
+  pointer-events: none;
+  animation: paint-tail var(--duration) cubic-bezier(0.28, 0.12, 0.32, 1) infinite;
+}
 
 @keyframes paint-drip {
   0% {
@@ -79,16 +85,16 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
     transform: scale(0.48, 0.28);
     opacity: 0.94;
   }
-  24% { /* slow paint buildup at top */
+  24% {
     transform: scale(1.18, 4.2);
   }
-  48% { /* thick paint stretch & drip */
+  48% {
     transform: scale(0.88, 6.4) translateY(5%);
   }
-  74% { /* flowing descent */
+  74% {
     transform: scale(0.78, 4.8) translateY(92%);
   }
-  91% { /* thinner trail near bottom */
+  91% {
     transform: scale(0.48, 2.0) translateY(165%);
   }
   100% {
@@ -98,12 +104,41 @@ a:hover { color: #fff; text-shadow: 0 0 8px #ffcc00; }
   }
 }
 
-@keyframes light-paint-wobble {
-  0%   { transform: translateX(0) rotate(-0.7deg); }
-  100% { transform: translateX(calc(var(--width) * 0.055)) rotate(1.7deg); }
+/* Tail animation: grows longer as drop falls, then fades */
+@keyframes paint-tail {
+  0% {
+    height: 0%;
+    opacity: 0;
+  }
+  20% {
+    height: 300%; /* tail starts forming behind */
+    opacity: 0.85;
+  }
+  50% {
+    height: 800%; /* long trailing paint streak */
+    opacity: 0.75;
+  }
+  80% {
+    height: 1200%;
+    opacity: 0.5;
+  }
+  100% {
+    height: 1800%;
+    opacity: 0;
+  }
 }
 
-/* Very faint paint/ceiling atmosphere */
+/* Individual drop variations */
+.drop-1  { --left:  5%; --width:  68px; --height: 140px; --duration: 78s; animation-delay: -5s; }
+.drop-2  { --left: 18%; --width:  98px; --height: 175px; --duration: 94s; animation-delay: -18s; }
+.drop-3  { --left: 33%; --width:  62px; --height: 125px; --duration: 86s; animation-delay: -35s; }
+.drop-4  { --left: 47%; --width:  92px; --height: 165px; --duration: 102s; animation-delay: -12s; }
+.drop-5  { --left: 60%; --width:  78px; --height: 150px; --duration: 90s; animation-delay: -42s; }
+.drop-6  { --left: 74%; --width: 108px; --height: 190px; --duration: 106s; animation-delay: -26s; }
+.drop-7  { --left: 87%; --width:  56px; --height: 108px; --duration: 74s; animation-delay: -52s; }
+.drop-8  { --left: 94%; --width:  84px; --height: 155px; --duration: 96s; animation-delay: -7s; }
+
+/* Very faint atmosphere */
 body::before {
   content: "";
   position: fixed;
