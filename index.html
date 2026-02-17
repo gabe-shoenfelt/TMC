@@ -1,12 +1,4 @@
-Here’s your page with the binary rain turned into a cool, blinking backdrop:
-
-Binary characters now blink/flicker randomly (like old CRT monitors or glitchy code rain)
-Subtle fade-in/out and opacity variation per character for that "alive" digital feel
-Kept it behind the gold drips (z-index separation) so the slime remains the focus
-Slowed the fall slightly for better visibility, added more density for a fuller backdrop effect
-
-index.html
-HTML<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,10 +18,10 @@ HTML<!DOCTYPE html>
     </defs>
   </svg>
 
-  <!-- Blinking binary backdrop layers -->
-  <div class="binary-backdrop binary-1"></div>
-  <div class="binary-backdrop binary-2"></div>
-  <div class="binary-backdrop binary-3"></div>
+  <!-- Binary rain layers – normal size, no giant text -->
+  <div class="binary-layer binary-1"></div>
+  <div class="binary-layer binary-2"></div>
+  <div class="binary-layer binary-3"></div>
 
   <!-- Gold drips with trails -->
   <div class="goo-container">
