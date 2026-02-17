@@ -8,6 +8,11 @@ body
     font-family: 'fantasy';
     background: black;
     color: goldenrod;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 .gooey-container {
   position: relative;
