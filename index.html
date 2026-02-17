@@ -5,11 +5,7 @@
 <link rel="stylesheet" href="style.css">
  </head>
  <body>
-
- </body>
-</html>
- <div class="content">
-            <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
+<img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
 <h1> TMC GAMES </h1>
 <p> all my games in the future will be here </p>
 <a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing"></a>
@@ -24,61 +20,5 @@
 
 <h2> More Coming Soon  </h2> 
     </div>
-
-   /* The Container for the Goo Background */
-  .goo-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    filter: url(#goo);
-    pointer-events: none; /* Allows clicks to pass through */
-    z-index: -1; /* Keeps it behind content */
-  }
-
-  /* The Moving Goo Elements */
-  .blob {
-    position: absolute;
-    background: linear-gradient(to bottom, #FFD700, #FF8C00); /* Golden color */
-    border-radius: 50%;
-    filter: blur(10px);
-    animation: moveGoo 4s ease-in-out forwards;
-    opacity: 0.8;
-  }
-
-  /* Keyframes for falling and disappearing */
-  @keyframes moveGoo {
-    0% { transform: translate(50vw, -200px) scale(1); }
-    50% { transform: translate(50vw, 50vh) scale(2); opacity: 0.9; }
-    100% { transform: translate(50vw, 120vh) scale(0.5); opacity: 0; }
-  }
-
-  /* SVG filter definition for the goo effect */
-  svg { display: none; }
-</style>
-</head>
-<body>
-
-<!-- SVG Filter Definition (crucial for the goo effect) -->
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
-      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-    </filter>
-  </defs>
-</svg>
-
-<div class="goo-container">
-  <!-- Add multiple blobs for better effect -->
-  <div class="blob" style="width:100px; height:100px; animation-delay:0s;"></div>
-  <div class="blob" style="width:150px; height:150px; animation-delay:1s; left: 20%;"></div>
-  <div class="blob" style="width:80px; height:80px; animation-delay:2s; left: 70%;"></div>
-</div>
-
-<div style="padding: 50px; text-align: center;">
-  <h1>Your Content</h1>
-  <p>The golden goo will flow behind this text.</p>
-</div>
-
-</body>
+ </body>
 </html>
-
