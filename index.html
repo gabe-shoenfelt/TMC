@@ -7,33 +7,114 @@
 </head>
 <body>
 
-  <!-- Background: red grid + speed lines + bike trails -->
-  <div class="ares-bg">
-    <div class="speed-lines"></div>
-  </div>
+  <!-- Canvas Matrix rain -->
+  <canvas id="matrix"></canvas>
 
-  <!-- Content -->
+  <!-- CRT curvature & vignette overlay -->
+  <div class="crt-overlay"></div>
+
+  <!-- Scanlines -->
+  <div class="scanlines"></div>
+
+  <!-- Cursor glow trail -->
+  <div class="cursor-glow"></div>
+
+  <!-- Random full-page glitch flash -->
+  <div class="glitch-flash"></div>
+
   <div class="content">
 
-    <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO" class="logo">
+    <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
 
-    <h1 class="title">TMC GAMES</h1>
+    <h1>TMC GAMES</h1>
 
-    <p class="intro">all my games in the future will be here</p>
+    <p>all my games in the future will be here</p>
 
-    <div class="links">
-      <a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing" class="link">Hubert Simulator</a>
-      <a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing" class="link">A MineCraft Game</a>
-      <a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing" class="link">Subway Runners</a>
-    </div>
+    <p><a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing">Hubert Simulator</a></p>
 
-    <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm" class="farm-img">
+    <p><a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing">A MineCraft Game</a></p>
 
-    <h3 class="subtitle">Farmer's Tale</h3>
+    <p><a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing">Subway Runners</a></p>
 
-    <h2 class="teaser">More Coming Soon</h2>
+    <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm">
+
+    <h3>Farmer's Tale</h3>
+
+    <h2>More Coming Soon</h2>
 
   </div>
+
+  <script>
+    // ────────────────────────────────────────
+    // Canvas Matrix rain – ultra-dense & variable
+    // ────────────────────────────────────────
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
+    const fontSize = 14; // smaller for density
+    const columns = Math.ceil(canvas.width / fontSize);
+
+    // Each column has its own speed & behavior
+    const drops = Array(columns).fill().map(() => ({
+      y: Math.random() * -canvas.height,
+      speed: 0.7 + Math.random() * 1.8, // wide speed variation
+      glitchChance: Math.random() * 0.02 + 0.01
+    }));
+
+    function drawRain() {
+      ctx.fillStyle = 'rgba(0,0,0,0.07)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = fontSize + 'px monospace';
+
+      drops.forEach((drop, i) => {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drop.y;
+
+        // Occasional bright glitch character
+        ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff80' : '#0f0';
+        ctx.fillText(text, x, y);
+
+        drop.y += drop.speed;
+
+        if (drop.y > canvas.height + fontSize) {
+          drop.y = Math.random() * -fontSize * 5;
+          drop.speed = 0.7 + Math.random() * 1.8; // re-randomize speed
+        }
+      });
+    }
+
+    setInterval(drawRain, 33);
+
+    // ────────────────────────────────────────
+    // Cursor glow trail
+    // ────────────────────────────────────────
+    const glow = document.querySelector('.cursor-glow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    });
+
+    // ────────────────────────────────────────
+    // Random page glitch flashes
+    // ────────────────────────────────────────
+    function triggerGlitch() {
+      const flash = document.querySelector('.glitch-flash');
+      flash.style.opacity = '0.12';
+      setTimeout(() => { flash.style.opacity = '0'; }, 120);
+    }
+
+    setInterval(triggerGlitch, 18000 + Math.random() * 24000); // every 18–42 seconds
+  </script>
 
 </body>
 </html>
