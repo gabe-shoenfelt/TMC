@@ -7,10 +7,10 @@
 </head>
 <body>
 
-  <!-- Matrix rain canvas -->
+  <!-- Classic Matrix rain canvas -->
   <canvas id="matrix"></canvas>
 
-  <!-- Mouse glow trail -->
+  <!-- Mouse glow trail  -->
   <div class="cursor-glow"></div>
 
   <div class="content">
@@ -36,9 +36,6 @@
   </div>
 
   <script>
-    // ────────────────────────────────────────
-    // Classic Matrix rain – dense, variable speed, glitchy highlights
-    // ────────────────────────────────────────
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -53,14 +50,15 @@
     const fontSize = 14;
     const columns = Math.ceil(canvas.width / fontSize);
 
+    // Each column has its own speed and reset behavior
     const drops = Array(columns).fill().map(() => ({
       y: Math.random() * -canvas.height,
-      speed: 0.8 + Math.random() * 1.4, // variation for organic feel
-      glitchChance: Math.random() * 0.015 + 0.005 // occasional bright flash
+      speed: 0.8 + Math.random() * 1.6, // variation for organic rain
+      glitchChance: Math.random() * 0.02 + 0.005 // occasional bright flash
     }));
 
     function draw() {
-      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.font = fontSize + 'px monospace';
@@ -70,24 +68,22 @@
         const x = i * fontSize;
         const y = drop.y;
 
-        // Glitch highlight on rare characters
+        // Bright glitch on rare characters
         ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff88' : '#0f0';
         ctx.fillText(text, x, y);
 
         drop.y += drop.speed;
 
         if (drop.y > canvas.height + fontSize) {
-          drop.y = Math.random() * -fontSize * 10; // random start height
-          drop.speed = 0.8 + Math.random() * 1.4; // re-randomize speed
+          drop.y = Math.random() * -fontSize * 8; // random re-entry height
+          drop.speed = 0.8 + Math.random() * 1.6; // re-randomize speed
         }
       });
     }
 
-    setInterval(draw, 30);
+    setInterval(draw, 28); // slightly faster for more dynamic feel
 
-    // ────────────────────────────────────────
     // Mouse glow trail
-    // ────────────────────────────────────────
     const glow = document.querySelector('.cursor-glow');
     document.addEventListener('mousemove', e => {
       glow.style.left = e.clientX + 'px';
