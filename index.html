@@ -10,7 +10,7 @@
   <!-- Classic Matrix rain canvas -->
   <canvas id="matrix"></canvas>
 
-  <!-- Mouse glow trail  -->
+  <!-- Mouse glow trail -->
   <div class="cursor-glow"></div>
 
   <div class="content">
@@ -50,11 +50,10 @@
     const fontSize = 14;
     const columns = Math.ceil(canvas.width / fontSize);
 
-    // Each column has its own speed and reset behavior
     const drops = Array(columns).fill().map(() => ({
       y: Math.random() * -canvas.height,
-      speed: 0.8 + Math.random() * 1.6, // variation for organic rain
-      glitchChance: Math.random() * 0.02 + 0.005 // occasional bright flash
+      speed: 0.9 + Math.random() * 1.5,
+      glitchChance: Math.random() * 0.018 + 0.005
     }));
 
     function draw() {
@@ -68,20 +67,19 @@
         const x = i * fontSize;
         const y = drop.y;
 
-        // Bright glitch on rare characters
         ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff88' : '#0f0';
         ctx.fillText(text, x, y);
 
         drop.y += drop.speed;
 
-        if (drop.y > canvas.height + fontSize) {
-          drop.y = Math.random() * -fontSize * 8; // random re-entry height
-          drop.speed = 0.8 + Math.random() * 1.6; // re-randomize speed
+        if (drop.y > canvas.height + fontSize * 2) {
+          drop.y = Math.random() * -fontSize * 6;
+          drop.speed = 0.9 + Math.random() * 1.5;
         }
       });
     }
 
-    setInterval(draw, 28); // slightly faster for more dynamic feel
+    setInterval(draw, 30);
 
     // Mouse glow trail
     const glow = document.querySelector('.cursor-glow');
