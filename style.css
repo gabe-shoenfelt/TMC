@@ -8,74 +8,29 @@ body {
   color: #0f0;
 }
 
-/* Canvas Matrix rain */
+/* Canvas rain layer */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -2;
 }
 
-/* CRT curvature + vignette */
-.crt-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(0,0,0,0.9) 100%);
-  box-shadow: inset 0 0 120px rgba(0,0,0,0.8);
-  border-radius: 0;
-}
-
-/* Scanlines + stronger CRT feel */
-.overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background: 
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 1px,
-      rgba(0,255,0,0.06) 1px,
-      rgba(0,255,0,0.06) 2px
-    );
-  opacity: 0.35;
-  animation: scan 12s linear infinite;
-}
-
-@keyframes scan {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 200%; }
-}
-
-/* Cursor glow trail */
+/* Mouse glow trail */
 .cursor-glow {
   position: fixed;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(0,255,0,0.25) 0%, transparent 70%);
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(0,255,0,0.28) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  opacity: 0.5;
+  opacity: 0.55;
   mix-blend-mode: screen;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 
-/* Random glitch flash */
-.glitch-flash {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  opacity: 0;
-  z-index: 9998;
-  pointer-events: none;
-  transition: opacity 0.12s;
-}
-
-/* Content – fantasy font, high visibility */
+/* Content – fantasy font, high readability */
 .content {
   position: relative;
   z-index: 10;
@@ -87,10 +42,9 @@ body {
   justify-content: center;
   text-align: center;
   color: #0f0;
-  text-shadow: 0 0 12px #0f0, 0 0 24px #0f0;
-  background: rgba(0,0,0,0.55);
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+  background: rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(0,255,0,0.15);
 }
 
 img {
@@ -98,27 +52,27 @@ img {
   margin: 25px 0;
   border: 2px solid #0f0;
   border-radius: 10px;
-  box-shadow: 0 0 30px #0f0;
+  box-shadow: 0 0 25px #0f0;
   transition: all 0.4s;
 }
 
 img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 50px #0f0;
+  transform: scale(1.08);
+  box-shadow: 0 0 45px #0f0;
 }
 
 h1 {
   font-size: 6rem;
   margin: 0.3em 0 0.5em;
   color: #0f0;
-  text-shadow: 0 0 20px #0f0, 0 0 40px #00cc33, 0 0 80px #009900;
+  text-shadow: 0 0 20px #0f0, 0 0 40px #00cc33;
   letter-spacing: 0.06em;
-  animation: pulse 4s ease-in-out infinite alternate;
+  animation: pulse 5s ease-in-out infinite alternate;
 }
 
 @keyframes pulse {
   from { text-shadow: 0 0 20px #0f0, 0 0 40px #00cc33; transform: scale(1); }
-  to   { text-shadow: 0 0 40px #0f0, 0 0 80px #00ff00, 0 0 120px #00aa00; transform: scale(1.03); }
+  to   { text-shadow: 0 0 40px #0f0, 0 0 80px #00ff00; transform: scale(1.02); }
 }
 
 p, a, h3, h2 {
@@ -137,5 +91,5 @@ a {
 a:hover {
   color: #00ff80;
   text-shadow: 0 0 25px #00ff80;
-  transform: scale(1.08);
+  transform: scale(1.06);
 }

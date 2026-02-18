@@ -7,20 +7,11 @@
 </head>
 <body>
 
-  <!-- Canvas Matrix rain -->
+  <!-- Matrix rain canvas -->
   <canvas id="matrix"></canvas>
 
-  <!-- CRT curvature & vignette overlay -->
-  <div class="crt-overlay"></div>
-
-  <!-- Scanlines -->
-  <div class="scanlines"></div>
-
-  <!-- Cursor glow trail -->
+  <!-- Mouse glow trail -->
   <div class="cursor-glow"></div>
-
-  <!-- Random full-page glitch flash -->
-  <div class="glitch-flash"></div>
 
   <div class="content">
 
@@ -46,31 +37,30 @@
 
   <script>
     // ────────────────────────────────────────
-    // Canvas Matrix rain – ultra-dense & variable
+    // Classic Matrix rain – dense, variable speed, glitchy highlights
     // ────────────────────────────────────────
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
-    function resizeCanvas() {
+    function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resize();
+    window.addEventListener('resize', resize);
 
     const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
-    const fontSize = 14; // smaller for density
+    const fontSize = 14;
     const columns = Math.ceil(canvas.width / fontSize);
 
-    // Each column has its own speed & behavior
     const drops = Array(columns).fill().map(() => ({
       y: Math.random() * -canvas.height,
-      speed: 0.7 + Math.random() * 1.8, // wide speed variation
-      glitchChance: Math.random() * 0.02 + 0.01
+      speed: 0.8 + Math.random() * 1.4, // variation for organic feel
+      glitchChance: Math.random() * 0.015 + 0.005 // occasional bright flash
     }));
 
-    function drawRain() {
-      ctx.fillStyle = 'rgba(0,0,0,0.07)';
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.font = fontSize + 'px monospace';
@@ -80,40 +70,29 @@
         const x = i * fontSize;
         const y = drop.y;
 
-        // Occasional bright glitch character
-        ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff80' : '#0f0';
+        // Glitch highlight on rare characters
+        ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff88' : '#0f0';
         ctx.fillText(text, x, y);
 
         drop.y += drop.speed;
 
         if (drop.y > canvas.height + fontSize) {
-          drop.y = Math.random() * -fontSize * 5;
-          drop.speed = 0.7 + Math.random() * 1.8; // re-randomize speed
+          drop.y = Math.random() * -fontSize * 10; // random start height
+          drop.speed = 0.8 + Math.random() * 1.4; // re-randomize speed
         }
       });
     }
 
-    setInterval(drawRain, 33);
+    setInterval(draw, 30);
 
     // ────────────────────────────────────────
-    // Cursor glow trail
+    // Mouse glow trail
     // ────────────────────────────────────────
     const glow = document.querySelector('.cursor-glow');
     document.addEventListener('mousemove', e => {
       glow.style.left = e.clientX + 'px';
       glow.style.top  = e.clientY + 'px';
     });
-
-    // ────────────────────────────────────────
-    // Random page glitch flashes
-    // ────────────────────────────────────────
-    function triggerGlitch() {
-      const flash = document.querySelector('.glitch-flash');
-      flash.style.opacity = '0.12';
-      setTimeout(() => { flash.style.opacity = '0'; }, 120);
-    }
-
-    setInterval(triggerGlitch, 18000 + Math.random() * 24000); // every 18–42 seconds
   </script>
 
 </body>
