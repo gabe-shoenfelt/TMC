@@ -1,83 +1,52 @@
 body {
   margin: 0;
   height: 100vh;
-  background: #0a0005;
+  background: #0a0000;
   overflow: hidden;
   position: relative;
   font-family: fantasy, Papyrus, Copperplate, "Times New Roman", serif;
-  color: #ff1a1a;
+  color: #ff3300;
 }
 
-/* Ultra-intense Ares background */
+/* Red grid + speed lines background */
 .ares-bg {
   position: fixed;
   inset: 0;
-  background: 
-    radial-gradient(ellipse at 50% 30%, rgba(255,40,0,0.12) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(255,80,0,0.08) 0%, transparent 70%);
-  animation: energy-surge 18s ease-in-out infinite;
-  z-index: -4;
-}
-
-@keyframes energy-surge {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50%      { opacity: 1;   transform: scale(1.04); }
-}
-
-/* Pulsing red circuit grid */
-.circuit-overlay {
-  position: fixed;
-  inset: 0;
-  background: 
-    linear-gradient(90deg, transparent 49%, rgba(255,51,0,0.07) 50%, transparent 51%),
-    linear-gradient(0deg, transparent 49%, rgba(255,51,0,0.07) 50%, transparent 51%);
-  background-size: 60px 60px;
-  animation: circuit-flow 24s linear infinite;
   z-index: -3;
+  background: 
+    radial-gradient(circle at 50% 40%, rgba(255,40,0,0.15) 0%, transparent 65%),
+    linear-gradient(90deg, transparent 49%, rgba(255,51,0,0.08) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(255,51,0,0.08) 50%, transparent 51%);
+  background-size: 100% 100%, 80px 80px, 80px 80px;
+  animation: grid-surge 8s ease-in-out infinite;
 }
 
-@keyframes circuit-flow {
-  0%   { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
+@keyframes grid-surge {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.03); }
 }
 
-/* Heavy glitch layer */
-.glitch-layer {
-  position: fixed;
+/* Speed lines (fast motion effect) */
+.speed-lines {
+  position: absolute;
   inset: 0;
-  background: transparent;
-  pointer-events: none;
-  z-index: -2;
-  animation: glitch 4s infinite steps(1);
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    transparent 4px,
+    rgba(255,100,0,0.12) 4px,
+    rgba(255,100,0,0.12) 8px
+  );
+  animation: speed-dash 2s linear infinite;
+  opacity: 0.6;
 }
 
-@keyframes glitch {
-  0%, 4%, 8%, 12%, 16%, 20%, 100% { transform: translate(0); opacity: 0; }
-  2%, 6%, 10%, 14%, 18% { 
-    transform: translate(2px, -2px) skew(1deg); 
-    opacity: 0.15;
-    background: rgba(255,0,0,0.12);
-  }
-}
-
-/* Floating red energy particles */
-.particles {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23ff3300" opacity="0.6"/></svg>') repeat;
-  background-size: 80px 80px;
-  animation: particle-drift 40s linear infinite;
-  opacity: 0.4;
-}
-
-@keyframes particle-drift {
+@keyframes speed-dash {
   0%   { background-position: 0 0; }
-  100% { background-position: 80px 80px; }
+  100% { background-position: 200px 200px; }
 }
 
-/* Main content – high contrast on dark */
+/* Content – high-energy layer */
 .content {
   position: relative;
   z-index: 10;
@@ -88,59 +57,74 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: rgba(10,0,5,0.75);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,51,0,0.3);
-  box-shadow: inset 0 0 60px rgba(255,51,0,0.15);
+  background: rgba(10,0,0,0.75);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,51,0,0.4);
+  box-shadow: inset 0 0 80px rgba(255,51,0,0.2);
 }
 
 .logo, .farm-img {
-  width: 220px;
+  width: 240px;
   margin: 30px 0;
   border: 3px solid #ff3300;
   border-radius: 12px;
-  box-shadow: 0 0 40px #ff3300, inset 0 0 20px #ff3300;
-  transition: all 0.5s;
+  box-shadow: 0 0 50px #ff3300, inset 0 0 30px #ff3300;
+  transition: all 0.6s;
 }
 
 .logo:hover, .farm-img:hover {
-  transform: scale(1.1) rotate(2deg);
-  box-shadow: 0 0 70px #ff3300, inset 0 0 35px #ff3300;
+  transform: scale(1.12) rotate(4deg);
+  box-shadow: 0 0 90px #ff3300, inset 0 0 50px #ff3300;
 }
 
 h1 {
-  font-size: 7rem;
+  font-size: 7.5rem;
   margin: 0.2em 0 0.4em;
   color: #ff5500;
   text-shadow: 
-    0 0 30px #ff5500,
-    0 0 60px #ff3300,
-    0 0 100px #ff0000,
-    0 0 140px #cc0000;
-  letter-spacing: 0.12em;
-  animation: title-surge 5s ease-in-out infinite alternate;
+    0 0 40px #ff5500,
+    0 0 80px #ff3300,
+    0 0 140px #ff0000,
+    0 0 200px #cc0000;
+  letter-spacing: 0.15em;
+  animation: surge 3.5s ease-in-out infinite alternate;
 }
 
-@keyframes title-surge {
-  from { text-shadow: 0 0 30px #ff5500, 0 0 60px #ff3300; transform: scale(1); }
-  to   { text-shadow: 0 0 60px #ff5500, 0 0 120px #ff3300, 0 0 180px #ff0000; transform: scale(1.03); }
+@keyframes surge {
+  from { text-shadow: 0 0 40px #ff5500, 0 0 80px #ff3300; transform: scale(1); }
+  to   { text-shadow: 0 0 80px #ff5500, 0 0 160px #ff3300, 0 0 240px #ff0000; transform: scale(1.04); }
 }
 
 p, a, h3, h2 {
-  font-size: 2.1rem;
+  font-size: 2.2rem;
   margin: 1.4em 0;
   color: #ff3300;
-  text-shadow: 0 0 12px #ff3300, 0 0 24px #ff0000;
-  max-width: 1000px;
+  text-shadow: 0 0 15px #ff3300, 0 0 30px #ff0000;
+  max-width: 1100px;
 }
 
-a {
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.link {
+  font-size: 2.4rem;
+  padding: 12px 30px;
+  border: 2px solid #ff3300;
+  border-radius: 12px;
   text-decoration: none;
+  color: #ff3300;
+  text-shadow: 0 0 15px #ff3300;
   transition: all 0.4s;
 }
 
-a:hover {
+.link:hover {
   color: #ff9900;
   text-shadow: 0 0 30px #ff9900;
-  transform: scale(1.1);
+  transform: translateY(-6px) scale(1.1);
+  box-shadow: 0 15px 40px rgba(255,51,0,0.6);
 }
