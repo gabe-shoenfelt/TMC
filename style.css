@@ -8,31 +8,17 @@ body {
   color: #0f0;
 }
 
-/* Matrix rain – bottom layer */
+/* Matrix rain canvas */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -2;
 }
 
-/* Mouse glow trail – middle layer, no mix-blend-mode blur on text */
-.cursor-glow {
-  position: fixed;
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle at 50% 50%, rgba(0,255,0,0.35) 0%, rgba(0,255,0,0.08) 60%, transparent 100%);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 5; /* above rain, below content */
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-/* Content – top layer, sharp text */
+/* Content layer – sharp green text */
 .content {
   position: relative;
-  z-index: 10; /* highest */
+  z-index: 10;
   padding: 40px 20px;
   min-height: 100vh;
   display: flex;
@@ -42,7 +28,8 @@ body {
   text-align: center;
   color: #0f0;
   text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
-  background: rgba(0,0,0,0.45); /* slight tint for readability without blur */
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
 }
 
 img {
