@@ -10,7 +10,7 @@
   <!-- Matrix rain canvas -->
   <canvas id="matrix"></canvas>
 
-  <!-- Mouse glow trail -->
+  <!-- Mouse glow trail – restored from the original code -->
   <div class="cursor-glow"></div>
 
   <div class="content">
@@ -36,7 +36,7 @@
   </div>
 
   <script>
-    // Classic Matrix rain
+    // Matrix rain – restored classic look
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -57,7 +57,7 @@
       glitchChance: Math.random() * 0.02 + 0.005
     }));
 
-    function drawRain() {
+    function draw() {
       ctx.fillStyle = 'rgba(0,0,0,0.04)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -80,9 +80,9 @@
       });
     }
 
-    setInterval(drawRain, 28);
+    setInterval(draw, 28);
 
-    // Mouse glow trail
+    // Mouse glow trail – exact original version you liked
     const glow = document.querySelector('.cursor-glow');
     document.addEventListener('mousemove', e => {
       glow.style.left = e.clientX + 'px';
