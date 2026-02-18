@@ -1,172 +1,88 @@
 body {
   margin: 0;
-  min-height: 100vh;
+  height: 100vh;
   background: #000;
-  color: goldenrod;
-  font-family: 'fantasy', cursive, sans-serif;
-  text-align: center;
   overflow: hidden;
   position: relative;
+  font-family: fantasy, Papyrus, Copperplate, "Times New Roman", serif;
 }
 
-img { width: 200px; margin: 20px 0; }
+/* Canvas Matrix rain layer */
+#matrix {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
 
-h1, h2, h3 {
-  text-shadow: 0 0 12px #ffcc00, 0 0 25px #ff9900;
-  margin: 10px 0;
+/* Subtle CRT scanline overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: 
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 255, 0, 0.03) 2px,
+      rgba(0, 255, 0, 0.03) 4px
+    );
+  animation: scan 10s linear infinite;
+}
+
+@keyframes scan {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* Content layer – fantasy font, no external dependencies */
+.content {
+  position: relative;
+  z-index: 10;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+img {
+  width: 200px;
+  margin: 20px 0;
+  border: 2px solid #0f0;
+  border-radius: 8px;
+  box-shadow: 0 0 20px #0f0;
+  transition: transform 0.4s;
+}
+
+img:hover {
+  transform: scale(1.08);
+}
+
+h1 {
+  font-size: 5rem;
+  margin: 0.3em 0 0.5em;
+  color: #0f0;
+  text-shadow: 0 0 15px #0f0, 0 0 30px #00cc33;
+  letter-spacing: 0.05em;
 }
 
 p, a {
-  text-shadow: 0 0 6px #ffd700;
-  font-size: 1.2rem;
-  margin: 12px 0;
-}
-
-a { color: #ffea00; text-decoration: none; }
-a:hover { color: #fff; text-shadow: 0 0 18px #ffff00; }
-
-/* Matrix-style binary background – classic falling code rain */
-.matrix-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -3;
-  overflow: hidden;
-  background: #000;
-  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.8rem;
+  margin: 1.2em 0;
   color: #0f0;
-  font-size: 16px;
-  line-height: 1.4;
-  white-space: pre;
-  opacity: 0.16;
-  will-change: transform;
-  transform: translateY(-100%);
-  animation: rain 120s linear infinite;
+  text-shadow: 0 0 8px #0f0;
 }
 
-.matrix-bg::before,
-.matrix-bg::after {
-  content: "0101010101010101010101010101010101010101\n1010101010101010101010101010101010101010\n0011001100110011001100110011001100110011\n1100110011001100110011001100110011001100\n0001110001110001110001110001110001110001\n1110001110001110001110001110001110001110\n0101010101010101010101010101010101010101\n1010101010101010101010101010101010101010\n0011001100110011001100110011001100110011\n1100110011001100110011001100110011001100\n0001110001110001110001110001110001110001\n1110001110001110001110001110001110001110";
-  display: block;
-  position: absolute;
-  top: -100%;
-  left: 0;
-  width: 100%;
+a {
+  text-decoration: none;
+  transition: all 0.3s;
 }
 
-.matrix-bg::after {
-  animation-delay: -60s;
-  opacity: 0.12;
-}
-
-@keyframes rain {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-/* Gold drips with trails */
-.goo-container {
-  position: fixed;
-  inset: 0;
-  filter: url(#goo);
-  pointer-events: none;
-  z-index: -1;
-}
-
-.slime-drop {
-  position: absolute;
-  left: var(--left);
-  width: var(--width);
-  height: var(--height);
-  background: radial-gradient(
-    circle at 40% 15%,
-    #fffef0 0%,
-    #fff59d 12%,
-    #ffeb3b 28%,
-    #ffdb4d 45%,
-    #ffcc00 62%,
-    #ffaa00 78%,
-    #ff8800 92%,
-    #e67e22 100%
-  );
-  border-radius: 50% 50% 75% 25% / 65% 35% 80% 35%;
-  opacity: 0.96;
-  box-shadow:
-    inset 0 -40px 50px rgba(255,255,220,0.65),
-    inset 0 30px 40px rgba(140,90,0,0.35),
-    0 0 55px rgba(255,190,0,0.85);
-  animation:
-    ceiling-drip var(--duration) cubic-bezier(0.23, 0.1, 0.32, 1) infinite;
-  transform-origin: 50% 0%;
-}
-
-.slime-drop::before {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background: linear-gradient(to top, rgba(255,251,220,0.8) 0%, rgba(255,220,100,0.4) 40%, transparent 100%);
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  transform-origin: bottom center;
-  opacity: 0;
-  animation: paint-trail var(--duration) cubic-bezier(0.23, 0.1, 0.32, 1) infinite;
-  pointer-events: none;
-}
-
-@keyframes ceiling-drip {
-  0% {
-    top: -100%;
-    transform: scale(0.4, 0.4);
-    opacity: 0;
-  }
-  6% {
-    top: -70%;
-    transform: scale(0.8, 0.8);
-    opacity: 0.96;
-  }
-  20% { transform: scale(1.1, 1.8); }
-  45% { transform: scale(1.0, 2.8) translateY(5%); }
-  70% { transform: scale(0.95, 2.2) translateY(60%); }
-  90% { transform: scale(0.85, 1.4) translateY(120%); }
-  100% {
-    top: 160%;
-    transform: scale(0.6, 0.6);
-    opacity: 0.92;
-  }
-}
-
-@keyframes paint-trail {
-  0%     { height: 0%;     opacity: 0; }
-  20%    { height: 300%;   opacity: 0.75; }
-  50%    { height: 700%;   opacity: 0.65; }
-  75%    { height: 1100%;  opacity: 0.5; }
-  90%    { height: 1400%;  opacity: 0.3; }
-  100%   { height: 1800%;  opacity: 0; }
-}
-
-.drop-1  { --left:  5%; --width:  70px; --height: 145px; --duration: 78s; animation-delay: -3s;  }
-.drop-2  { --left: 18%; --width: 102px; --height: 185px; --duration: 94s; animation-delay: -19s; }
-.drop-3  { --left: 33%; --width:  65px; --height: 125px; --duration: 86s; animation-delay: -34s; }
-.drop-4  { --left: 47%; --width:  95px; --height: 170px; --duration: 102s; animation-delay: -13s; }
-.drop-5  { --left: 60%; --width:  80px; --height: 150px; --duration: 89s; animation-delay: -42s; }
-.drop-6  { --left: 74%; --width: 115px; --height: 200px; --duration: 105s; animation-delay: -27s; }
-.drop-7  { --left: 87%; --width:  58px; --height: 110px; --duration: 74s; animation-delay: -51s; }
-.drop-8  { --left: 95%; --width:  88px; --height: 160px; --duration: 96s; animation-delay: -7s;  }
-
-/* Golden glow */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(255,248,140,0.18) 0%, transparent 80%);
-  pointer-events: none;
-  z-index: -4;
-  animation: ceiling-shine 40s ease-in-out infinite;
-}
-
-@keyframes ceiling-shine {
-  0%, 100% { opacity: 0.55; }
-  50%      { opacity: 0.9; }
+a:hover {
+  color: #00ff80;
+  text-shadow: 0 0 15px #00ff80;
 }

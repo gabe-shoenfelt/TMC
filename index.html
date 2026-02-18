@@ -7,49 +7,76 @@
 </head>
 <body>
 
-  <!-- Goo filter for gold drips merging -->
-  <svg style="position:absolute; width:0; height:0;">
-    <defs>
-      <filter id="goo">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
-        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10" result="goo"/>
-        <feBlend in="SourceGraphic" in2="goo"/>
-      </filter>
-    </defs>
-  </svg>
+  <!-- Canvas for Matrix rain -->
+  <canvas id="matrix"></canvas>
 
-  <!-- Matrix-style binary background -->
-  <div class="matrix-bg"></div>
+  <!-- Subtle scanline overlay -->
+  <div class="overlay"></div>
 
-  <!-- Gold drips container -->
-  <div class="goo-container">
-    <div class="slime-drop drop-1"></div>
-    <div class="slime-drop drop-2"></div>
-    <div class="slime-drop drop-3"></div>
-    <div class="slime-drop drop-4"></div>
-    <div class="slime-drop drop-5"></div>
-    <div class="slime-drop drop-6"></div>
-    <div class="slime-drop drop-7"></div>
-    <div class="slime-drop drop-8"></div>
+  <div class="content">
+
+    <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
+
+    <h1>TMC GAMES</h1>
+
+    <p>all my games in the future will be here</p>
+
+    <p><a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing">Hubert Simulator</a></p>
+
+    <p><a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing">A MineCraft Game</a></p>
+
+    <p><a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing">Subway Runners</a></p>
+
+    <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm">
+
+    <h3>Farmer's Tale</h3>
+
+    <h2>More Coming Soon</h2>
+
   </div>
 
-  <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
 
-  <h1>TMC GAMES</h1>
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
 
-  <p>all my games in the future will be here</p>
+    window.addEventListener('resize', () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
 
-  <p><a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing">Hubert Simulator</a></p>
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
 
-  <p><a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing">A MineCraft Game</a></p>
+    const drops = Array(Math.floor(columns)).fill(1);
 
-  <p><a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing">Subway Runners</a></p>
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm">
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
 
-  <h3>Farmer's Tale</h3>
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
 
-  <h2>More Coming Soon</h2>
+        ctx.fillText(text, x, y);
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+  </script>
 
 </body>
 </html>
