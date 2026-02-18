@@ -2,41 +2,32 @@ body {
   margin: 0;
   height: 100vh;
   background: #000;
+  color: #ff3300; /* Tron red-orange */
+  font-family: fantasy, Papyrus, Copperplate, "Times New Roman", serif;
   overflow: hidden;
   position: relative;
-  font-family: fantasy, Papyrus, Copperplate, "Times New Roman", serif;
 }
 
-/* Canvas Matrix rain layer */
-#matrix {
+/* Tron: Ares red grid background */
+.tron-grid {
   position: fixed;
   inset: 0;
   z-index: -2;
-}
-
-/* Subtle CRT scanline overlay */
-.overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
   background: 
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 2px,
-      rgba(0, 255, 0, 0.03) 2px,
-      rgba(0, 255, 0, 0.03) 4px
-    );
-  animation: scan 10s linear infinite;
+    radial-gradient(circle at 50% 50%, rgba(255, 51, 0, 0.04) 0%, transparent 70%),
+    linear-gradient(to right, rgba(255, 51, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 51, 0, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 50px 50px, 50px 50px;
+  animation: grid-pulse 10s ease-in-out infinite;
+  pointer-events: none;
 }
 
-@keyframes scan {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 100%; }
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.85; transform: scale(1.02); }
 }
 
-/* Content layer – all text green */
+/* Content on top */
 .content {
   position: relative;
   z-index: 10;
@@ -47,36 +38,46 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #0f0;
-  text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
+  background: rgba(0, 0, 0, 0.65); /* dark tint for readability */
+  backdrop-filter: blur(4px);
 }
 
 img {
-  width: 200px;
-  margin: 20px 0;
-  border: 2px solid #0f0;
+  width: 220px;
+  margin: 25px 0;
+  border: 2px solid #ff3300;
   border-radius: 8px;
-  box-shadow: 0 0 20px #0f0;
-  transition: transform 0.4s;
+  box-shadow: 0 0 25px #ff3300, inset 0 0 15px #ff3300;
+  transition: all 0.4s;
 }
 
 img:hover {
   transform: scale(1.08);
+  box-shadow: 0 0 45px #ff3300, inset 0 0 25px #ff3300;
 }
 
 h1 {
-  font-size: 5.5rem;
+  font-size: 6rem;
   margin: 0.3em 0 0.5em;
-  color: #0f0;                      /* changed to green – no gold */
-  text-shadow: 0 0 15px #0f0, 0 0 30px #00cc33;
-  letter-spacing: 0.05em;
+  color: #ff6600; /* bright Tron orange-red */
+  text-shadow: 
+    0 0 20px #ff6600,
+    0 0 40px #ff3300,
+    0 0 80px #ff0000;
+  letter-spacing: 0.08em;
+  animation: neon-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes neon-pulse {
+  from { text-shadow: 0 0 20px #ff6600, 0 0 40px #ff3300; }
+  to   { text-shadow: 0 0 40px #ff6600, 0 0 80px #ff3300, 0 0 120px #ff0000; }
 }
 
 p, a, h3, h2 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   margin: 1.2em 0;
-  color: #0f0;
-  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+  color: #ff3300;
+  text-shadow: 0 0 10px #ff3300, 0 0 20px #ff0000;
 }
 
 a {
@@ -85,6 +86,6 @@ a {
 }
 
 a:hover {
-  color: #00ff80;
-  text-shadow: 0 0 15px #00ff80;
+  color: #ff9900;
+  text-shadow: 0 0 20px #ff9900;
 }
