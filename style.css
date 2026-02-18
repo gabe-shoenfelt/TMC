@@ -36,7 +36,7 @@ body {
   100% { background-position: 0 100%; }
 }
 
-/* Content layer */
+/* Content layer – everything visible on top */
 .content {
   position: relative;
   z-index: 10;
@@ -47,6 +47,8 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
+  color: #0f0; /* bright green for text */
+  text-shadow: 0 0 8px #0f0;
 }
 
 img {
@@ -76,7 +78,7 @@ h1 {
 p, a, h3, h2 {
   font-size: 1.8rem;
   margin: 1.2em 0;
-  color: #0f0;                      /* bright green for all other text */
+  color: #0f0;                      /* strong green – no black text */
   text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
 }
 
