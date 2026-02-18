@@ -7,9 +7,13 @@
 </head>
 <body>
 
-  <!-- Classic Matrix rain canvas -->
+  <!-- Canvas Matrix rain background -->
   <canvas id="matrix"></canvas>
 
+  <!-- Subtle scanline overlay -->
+  <div class="overlay"></div>
+
+  <!-- All your content – now on top with higher z-index -->
   <div class="content">
 
     <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
@@ -36,47 +40,42 @@
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
-    function resize() {
-      canvas.width = window.innerWidth;
+    function resizeCanvas() {
       canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
     }
-    resize();
-    window.addEventListener('resize', resize);
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
-    const fontSize = 14;
-    const columns = Math.ceil(canvas.width / fontSize);
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
 
-    const drops = Array(columns).fill().map(() => ({
-      y: Math.random() * -canvas.height,
-      speed: 0.8 + Math.random() * 1.6,
-      glitchChance: Math.random() * 0.02 + 0.005
-    }));
+    const drops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
-      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      ctx.fillStyle = '#0f0';
       ctx.font = fontSize + 'px monospace';
 
-      drops.forEach((drop, i) => {
+      for (let i = 0; i < drops.length; i++) {
         const text = chars[Math.floor(Math.random() * chars.length)];
         const x = i * fontSize;
-        const y = drop.y;
+        const y = drops[i] * fontSize;
 
-        ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff88' : '#0f0';
         ctx.fillText(text, x, y);
 
-        drop.y += drop.speed;
-
-        if (drop.y > canvas.height + fontSize * 2) {
-          drop.y = Math.random() * -fontSize * 8;
-          drop.speed = 0.8 + Math.random() * 1.6;
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
-      });
+
+        drops[i]++;
+      }
     }
 
-    setInterval(draw, 28);
+    setInterval(draw, 35);
   </script>
 
 </body>
