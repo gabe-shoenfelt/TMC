@@ -8,32 +8,31 @@ body {
   color: #0f0;
 }
 
-/* Matrix rain canvas */
+/* Matrix rain – bottom layer */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -2;
 }
 
-/* Mouse glow trail – restored from the original code you loved */
+/* Mouse glow trail – middle layer, no mix-blend-mode blur on text */
 .cursor-glow {
   position: fixed;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(0,255,0,0.3) 0%, transparent 70%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle at 50% 50%, rgba(0,255,0,0.35) 0%, rgba(0,255,0,0.08) 60%, transparent 100%);
   border-radius: 50%;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  z-index: 9999;
-  opacity: 0.6;
-  mix-blend-mode: screen;
+  z-index: 5; /* above rain, below content */
+  opacity: 0.7;
   transition: opacity 0.2s;
 }
 
-/* Content layer – all green, readable */
+/* Content – top layer, sharp text */
 .content {
   position: relative;
-  z-index: 10;
+  z-index: 10; /* highest */
   padding: 40px 20px;
   min-height: 100vh;
   display: flex;
@@ -43,8 +42,7 @@ body {
   text-align: center;
   color: #0f0;
   text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.45); /* slight tint for readability without blur */
 }
 
 img {
@@ -67,12 +65,6 @@ h1 {
   color: #0f0;
   text-shadow: 0 0 20px #0f0, 0 0 40px #00cc33;
   letter-spacing: 0.06em;
-  animation: pulse 5s ease-in-out infinite alternate;
-}
-
-@keyframes pulse {
-  from { text-shadow: 0 0 20px #0f0, 0 0 40px #00cc33; transform: scale(1); }
-  to   { text-shadow: 0 0 40px #0f0, 0 0 80px #00ff00; transform: scale(1.02); }
 }
 
 p, a, h3, h2 {
