@@ -7,7 +7,7 @@
 </head>
 <body>
 
-  <!-- Classic Matrix rain canvas -->
+  <!-- Matrix rain canvas -->
   <canvas id="matrix"></canvas>
 
   <!-- Mouse glow trail -->
@@ -36,6 +36,7 @@
   </div>
 
   <script>
+    // Classic Matrix rain
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
 
@@ -52,11 +53,11 @@
 
     const drops = Array(columns).fill().map(() => ({
       y: Math.random() * -canvas.height,
-      speed: 0.9 + Math.random() * 1.5,
-      glitchChance: Math.random() * 0.018 + 0.005
+      speed: 0.8 + Math.random() * 1.6,
+      glitchChance: Math.random() * 0.02 + 0.005
     }));
 
-    function draw() {
+    function drawRain() {
       ctx.fillStyle = 'rgba(0,0,0,0.04)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -73,13 +74,13 @@
         drop.y += drop.speed;
 
         if (drop.y > canvas.height + fontSize * 2) {
-          drop.y = Math.random() * -fontSize * 6;
-          drop.speed = 0.9 + Math.random() * 1.5;
+          drop.y = Math.random() * -fontSize * 8;
+          drop.speed = 0.8 + Math.random() * 1.6;
         }
       });
     }
 
-    setInterval(draw, 30);
+    setInterval(drawRain, 28);
 
     // Mouse glow trail
     const glow = document.querySelector('.cursor-glow');
