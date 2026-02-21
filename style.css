@@ -4,39 +4,18 @@ body {
   background: #000;
   overflow: hidden;
   position: relative;
-  font-family: fantasy, Papyrus, Copperplate, "Times New Roman", serif;
+  font-family: 'Quackard12', fantasy, Papyrus, Copperplate, serif;
+  color: #0f0;
 }
 
-/* Canvas Matrix rain layer */
+/* Matrix rain canvas */
 #matrix {
   position: fixed;
   inset: 0;
   z-index: -2;
 }
 
-/* Subtle CRT scanline overlay */
-.overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  background: 
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 2px,
-      rgba(0, 255, 0, 0.03) 2px,
-      rgba(0, 255, 0, 0.03) 4px
-    );
-  animation: scan 10s linear infinite;
-}
-
-@keyframes scan {
-  0%   { background-position: 0 0; }
-  100% { background-position: 0 100%; }
-}
-
-/* Content layer – all text green */
+/* Content layer – now using Quackard12 for everything */
 .content {
   position: relative;
   z-index: 10;
@@ -48,35 +27,41 @@ body {
   justify-content: center;
   text-align: center;
   color: #0f0;
-  text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
 }
 
 img {
-  width: 200px;
-  margin: 20px 0;
+  width: 220px;
+  margin: 25px 0;
   border: 2px solid #0f0;
-  border-radius: 8px;
-  box-shadow: 0 0 20px #0f0;
-  transition: transform 0.4s;
+  border-radius: 10px;
+  box-shadow: 0 0 30px #0f0;
+  transition: all 0.4s;
 }
 
 img:hover {
   transform: scale(1.08);
+  box-shadow: 0 0 50px #0f0;
+}
+
+h1, h2, h3, p, a {
+  font-family: 'Quackard12', fantasy, Papyrus, Copperplate, serif;
+  color: #0f0;
+  text-shadow: 0 0 12px #0f0, 0 0 24px #0f0;
 }
 
 h1 {
-  font-size: 5.5rem;
+  font-size: 6rem;
   margin: 0.3em 0 0.5em;
-  color: #0f0;                      /* changed to green – no gold */
-  text-shadow: 0 0 15px #0f0, 0 0 30px #00cc33;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 p, a, h3, h2 {
-  font-size: 1.8rem;
-  margin: 1.2em 0;
-  color: #0f0;
-  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+  font-size: 2rem;
+  margin: 1.4em 0;
+  max-width: 1000px;
 }
 
 a {
@@ -86,5 +71,6 @@ a {
 
 a:hover {
   color: #00ff80;
-  text-shadow: 0 0 15px #00ff80;
+  text-shadow: 0 0 25px #00ff80;
+  transform: scale(1.06);
 }

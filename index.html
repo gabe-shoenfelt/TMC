@@ -2,79 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-    <title>TMC GAMES</title>
-      <link rel="stylesheet" href="style.css">
-      </head>
-      <body>
+  <title>TMC GAMES</title>
+  <!-- Quackard12 font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quackard12&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-        <!-- Canvas for Matrix rain -->
-          <canvas id="matrix"></canvas>
+  <!-- Matrix rain canvas -->
+  <canvas id="matrix"></canvas>
 
-            <!-- Subtle scanline overlay -->
-              <div class="overlay"></div>
+  <div class="content">
 
-                <div class="content">
+    <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699484fd&is=6993337d&hm=e88521d55144dabbc848037a99aaee5b39d773390e553ef93c6dc88f5b528660&" alt="TMC LOGO">
 
-                    <img src="https://cdn.discordapp.com/attachments/1377028872561754282/1465182179792523430/-1_orig.jpg?ex=699b1c7d&is=6999cafd&hm=1a22815667714aea154e880d88662afa2ac2e4d97982ab34d02edf3416852707&" alt="TMC LOGO">
+    <h1>TMC GAMES</h1>
 
-                        <h1>TMC GAMES</h1>
+    <p>all my games in the future will be here</p>
 
-                            <p>all my games in the future will be here</p>
+    <p><a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing">Hubert Simulator</a></p>
 
-                                <p><a href="https://drive.google.com/file/d/1l6NCIdeLXW7DU5whjv6rVeR4r4tVd0Mf/view?usp=sharing">Hubert Simulator</a></p>
+    <p><a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing">A MineCraft Game</a></p>
 
-                                    <p><a href="https://drive.google.com/file/d/11dwqczGf40ye0e5aN8G11by8K58TNv5q/view?usp=sharing">A MineCraft Game</a></p>
+    <p><a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing">Subway Runners</a></p>
 
-                                        <p><a href="https://drive.google.com/file/d/1xqjenhaLDwU43UN6Yc4_Pur0ORkSaxGF/view?usp=sharing">Subway Runners</a></p>
+    <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm">
 
-                                            <img src="https://foodtank.com/wp-content/uploads/2020/04/COVID-19-Relief_Small-Farms-.jpg" alt="Farm">
+    <h3>Farmer's Tale</h3>
 
-                                                <h3>Farmer's Tale</h3>
+    <h2>More Coming Soon</h2>
 
-                                                    <h2>More Coming Soon</h2>
+  </div>
 
-                                                      </div>  <!-- ← this was missing -->
+  <script>
+    // Classic Matrix rain
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
 
-                                                        <script>
-                                                            const canvas = document.getElementById('matrix');
-                                                                const ctx = canvas.getContext('2d');
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-                                                                    function resize() {
-                                                                          canvas.width = window.innerWidth;
-                                                                                canvas.height = window.innerHeight;
-                                                                                    }
-                                                                                        resize();
-                                                                                            window.addEventListener('resize', resize);
+    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
+    const fontSize = 14;
+    const columns = Math.ceil(canvas.width / fontSize);
 
-                                                                                                const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン".split('');
-                                                                                                    const fontSize = 16;
-                                                                                                        const columns = Math.floor(canvas.width / fontSize);
-                                                                                                            const drops = Array(columns).fill(1);
+    const drops = Array(columns).fill().map(() => ({
+      y: Math.random() * -canvas.height,
+      speed: 0.8 + Math.random() * 1.6,
+      glitchChance: Math.random() * 0.02 + 0.005
+    }));
 
-                                                                                                                function draw() {
-                                                                                                                      ctx.fillStyle = 'rgba(0,0,0,0.05)';
-                                                                                                                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                                                                                                                                  ctx.fillStyle = '#0f0';
-                                                                                                                                        ctx.font = fontSize + 'px monospace';
+      ctx.font = fontSize + 'px monospace';
 
-                                                                                                                                              for (let i = 0; i < drops.length; i++) {
-                                                                                                                                                      const text = chars[Math.floor(Math.random() * chars.length)];
-                                                                                                                                                              const x = i * fontSize;
-                                                                                                                                                                      const y = drops[i] * fontSize;
+      drops.forEach((drop, i) => {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drop.y;
 
-                                                                                                                                                                              ctx.fillText(text, x, y);
+        ctx.fillStyle = Math.random() < drop.glitchChance ? '#00ff88' : '#0f0';
+        ctx.fillText(text, x, y);
 
-                                                                                                                                                                                      if (y > canvas.height && Math.random() > 0.975) {
-                                                                                                                                                                                                drops[i] = 0;
-                                                                                                                                                                                                        }
+        drop.y += drop.speed;
 
-                                                                                                                                                                                                                drops[i]++;
-                                                                                                                                                                                                                      }
-                                                                                                                                                                                                                          }
+        if (drop.y > canvas.height + fontSize * 2) {
+          drop.y = Math.random() * -fontSize * 8;
+          drop.speed = 0.8 + Math.random() * 1.6;
+        }
+      });
+    }
 
-                                                                                                                                                                                                                              setInterval(draw, 35);
-                                                                                                                                                                                                                                </script>
+    setInterval(draw, 28);
+  </script>
 
-                                                                                                                                                                                                                                </body>
-                                                                                                                                                                                                                                </html>
+</body>
+</html>
